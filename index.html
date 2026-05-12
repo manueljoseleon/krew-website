@@ -907,7 +907,8 @@
     <h2 class="h2" style="margin:0 auto">¿Listo para dejar atrás el Excel y el WhatsApp?</h2>
     <p class="lead" style="margin-top:22px;margin-left:auto;margin-right:auto">Cuéntanos cómo operas hoy y te mostramos cómo Krew lo simplifica.</p>
     <div class="contact-wrap">
-      <form id="contact-form" novalidate>
+      <form id="contact-form" name="contact" netlify novalidate>
+        <input type="hidden" name="form-name" value="contact" />
         <div class="form-row" style="text-align:left">
           <label for="nombre">Nombre completo</label>
           <input id="nombre" name="nombre" type="text" placeholder="María González" />
@@ -1106,11 +1107,22 @@
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Enviando…';
-    setTimeout(() => {
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })
+    .then(() => {
       form.style.display = 'none';
       successEl.style.display = 'block';
       document.getElementById('success-name').textContent = 'Gracias, ' + nombre.split(' ')[0] + '.';
-    }, 700);
+    })
+    .catch(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar';
+      alert('Hubo un error al enviar. Por favor intenta de nuevo.');
+    });
   });
 </script>
 </body>

@@ -364,6 +364,40 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
 .reveal.in { opacity: 1; transform: none; }
 .cobre-divider { height: 6px; background: var(--accent); width: 100%; }
+
+/* Hero modules */
+.hero-modules { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; }
+@media (max-width: 720px) { .hero-modules { grid-template-columns: 1fr; } }
+.hmod { text-align: left; padding: 28px; display: flex; flex-direction: column; border-top: 3px solid var(--stage, var(--accent)); transition: background var(--dur-base) var(--ease-std); }
+.hmod:hover { background: var(--krew-cobre-10); }
+.hmod-1 { --stage: #7A3E1A; } .hmod-2 { --stage: #D4622A; } .hmod-3 { --stage: #B07B3F; }
+.hmod-arrow { display: flex; align-items: center; justify-content: center; color: var(--accent); padding: 0 8px; }
+@media (max-width: 720px) { .hmod { border-top-width: 3px; border-bottom: 1px solid var(--divider); } .hmod-arrow { padding: 16px 0; transform: rotate(90deg); } }
+.hmod-num { font-size: 14px; font-weight: 600; color: var(--stage, var(--accent)); margin-bottom: 14px; }
+.hmod-name { font-family: var(--font-sans); font-weight: 700; font-size: 19px; color: var(--fg-1); letter-spacing: 0.01em; margin-bottom: 8px; }
+.hmod-desc { font-size: 13px; color: var(--fg-2); line-height: 1.5; }
+
+/* Grid 2x2 overrides */
+.pcards.grid-2x2 { grid-template-columns: 1fr 1fr; }
+.audience-cards.grid-2x2 { grid-template-columns: 1fr 1fr; }
+@media (max-width: 880px) { .pcards.grid-2x2 { grid-template-columns: 1fr; } .audience-cards.grid-2x2 { grid-template-columns: 1fr; } }
+
+/* Modules section */
+.modules-section { background: var(--bg-elevated); }
+.modules-flow { margin-top: 64px; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; }
+@media (max-width: 880px) { .modules-flow { grid-template-columns: 1fr; } .mflow-arrow { padding: 14px 0; transform: rotate(90deg); } }
+.mcard { background: var(--surface-card); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: var(--radius-lg); padding: 32px 28px; display: flex; flex-direction: column; }
+.mcard .mc-eyebrow { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 14px; }
+.mcard h3 { font-family: var(--font-sans); font-weight: 700; font-size: 19px; letter-spacing: 0.02em; margin-bottom: 14px; color: var(--fg-1); }
+.mcard p { font-size: var(--fs-body); color: var(--fg-2); line-height: var(--lh-body); margin-bottom: 20px; }
+.mcard .mc-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--divider); font-family: var(--font-mono); font-size: 11px; color: var(--krew-cobre-suave); line-height: 1.5; }
+.mflow-arrow { display: flex; align-items: center; justify-content: center; color: var(--accent); padding: 0 18px; }
+.modules-note { margin: 48px auto 0; max-width: 760px; text-align: center; font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-2); text-wrap: pretty; }
+.modules-note strong { color: var(--fg-1); font-weight: 700; }
+
+/* Live dot */
+.live-dot { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--krew-rojo-critico); letter-spacing: 0.08em; }
+.live-dot::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--krew-rojo-critico); }
 </style>
 </head>
 <body>
@@ -393,19 +427,32 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="container">
-    <span class="eyebrow-badge">El sistema operativo para colaboradores y contratistas</span>
-    <h1 class="h-hero">La acreditación de contratistas mineros, reinventada.</h1>
-    <p class="hero-sub">Krew reemplaza consultores, Excel y carpetas compartidas con una plataforma AI-native que gestiona cada documento, cada trabajador y cada activo — en tiempo real.</p>
+    <span class="eyebrow-badge">Plataforma AI-native para compliance operacional</span>
+    <h1 class="h-hero">El sistema operativo para contratistas mineros.</h1>
+    <p class="hero-sub">Krew gestiona la acreditación, los permisos de trabajo, la coordinación de terreno y la inteligencia operacional de tu empresa — en una sola plataforma, para todas las faenas donde operas.</p>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#contacto">Solicitar piloto <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></a>
       <a class="btn btn-ghost" href="#como-funciona">Ver cómo funciona <i data-lucide="arrow-down" style="width:16px;height:16px;"></i></a>
     </div>
     <div class="hero-strip">
-      <div class="hero-strip-grid">
-        <div class="strip-item"><div class="strip-k mono">2.000+</div><div class="strip-l">Documentos activos por contratista promedio</div></div>
-        <div class="strip-item"><div class="strip-k mono">30 días</div><div class="strip-l">De alerta antes del vencimiento</div></div>
-        <div class="strip-item"><div class="strip-k mono">100%</div><div class="strip-l">Trazabilidad documental auditable</div></div>
-        <div class="strip-item"><div class="strip-k mono">24h</div><div class="strip-l">QR de acceso renovado cada día</div></div>
+      <div class="hero-modules">
+        <a class="hmod hmod-1" href="#producto">
+          <div class="hmod-num mono">01</div>
+          <div class="hmod-name">Accreditation</div>
+          <div class="hmod-desc">Cada trabajador y activo acreditado en tiempo real, en todas tus faenas.</div>
+        </a>
+        <div class="hmod-arrow" aria-hidden="true"><i data-lucide="arrow-right" style="width:34px;height:34px;"></i></div>
+        <a class="hmod hmod-2" href="#producto">
+          <div class="hmod-num mono">02</div>
+          <div class="hmod-name">Execution</div>
+          <div class="hmod-desc">Permisos de trabajo, cuadrillas y registro de terreno — todo evidenciado.</div>
+        </a>
+        <div class="hmod-arrow" aria-hidden="true"><i data-lucide="arrow-right" style="width:34px;height:34px;"></i></div>
+        <a class="hmod hmod-3" href="#producto">
+          <div class="hmod-num mono">03</div>
+          <div class="hmod-name">Intelligence</div>
+          <div class="hmod-desc">Score de riesgo, predicción de cobro y benchmarks entre contratistas.</div>
+        </a>
       </div>
     </div>
   </div>
@@ -416,10 +463,10 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
   <div class="container">
     <div class="section-head reveal">
       <span class="eyebrow">El problema</span>
-      <h2 class="h-section">Gestionar la acreditación de tus trabajadores no debería ser tan complejo.</h2>
-      <p>Un contratista con 200 trabajadores administra más de 2.000 documentos activos al mismo tiempo — licencias, EPP, cursos, exámenes médicos, permisos de equipos — cada uno con su propia fecha de vencimiento y sus propios requisitos por faena. Revisar qué documentos vencen, perseguir actualizaciones, y validar procedimientos aprobados no debería tomar tanto tiempo.</p>
+      <h2 class="h-section">Gestionar el cumplimiento de tus trabajadores no debería ser tan complejo.</h2>
+      <p>Un contratista con 200 trabajadores administra más de 3.000 documentos activos al mismo tiempo — en múltiples minas, cada una con sus propios requisitos. Revisar qué vence, perseguir actualizaciones y demostrar cumplimiento no debería tomar tanto tiempo.</p>
     </div>
-    <div class="pcards">
+    <div class="pcards grid-2x2">
       <div class="pcard reveal">
         <div class="pcard-ico"><i data-lucide="shield-alert" style="width:20px;height:20px;"></i></div>
         <h3>Trabajadores bloqueados en portería</h3>
@@ -427,12 +474,17 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
       </div>
       <div class="pcard reveal">
         <div class="pcard-ico"><i data-lucide="receipt" style="width:20px;height:20px;"></i></div>
-        <h3>Pagos retenidos por documentación incompleta</h3>
+        <h3>Pagos retrasados por documentación incompleta</h3>
         <p>La mina no paga hasta que la documentación de todos los trabajadores esté completa y validada. Con procesos manuales, ese ciclo se extiende semanas más de lo necesario — y el contratista financia la diferencia.</p>
       </div>
       <div class="pcard reveal">
+        <div class="pcard-ico"><i data-lucide="file-x" style="width:20px;height:20px;"></i></div>
+        <h3>Descuentos en boleta que no puedes refutar</h3>
+        <p>Sin registro de terreno, no hay evidencia para disputar un descuento. Si el trabajo se hizo pero no quedó documentado en el momento, la mina gana el argumento por default.</p>
+      </div>
+      <div class="pcard reveal">
         <div class="pcard-ico"><i data-lucide="file-search" style="width:20px;height:20px;"></i></div>
-        <h3>Cumplimiento regulatorio sin sistema</h3>
+        <h3>Cumplimiento regulatorio sin evidencia</h3>
         <p>Las regulaciones vigentes exigen trazabilidad documental real, no carpetas compartidas. Demostrar cumplimiento en una fiscalización requiere hoy horas de búsqueda manual — si es que la evidencia existe.</p>
       </div>
     </div>
@@ -459,9 +511,9 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
         <p>El sistema monitorea cada certificación activa y alerta al trabajador, al área de RRHH y al administrador de contratos 30, 15 y 7 días antes del vencimiento. La acción correctiva ocurre antes del problema.</p>
       </div>
       <div class="cap reveal">
-        <div class="cap-num">03 / Visibilidad</div>
-        <h3>Estado en tiempo real por persona, activo y faena</h3>
-        <p>Un solo dashboard muestra quién está acreditado, quién tiene documentos pendientes y qué vence esta semana — sin tener que llamar a nadie ni abrir carpetas.</p>
+        <div class="cap-num">03 / Terreno</div>
+        <h3>Registro inmutable de cada acción en faena</h3>
+        <p>Permisos de trabajo digitales, firma del supervisor, fotos de condiciones, checklists. Cada acción queda documentada con timestamp en el momento en que ocurre — evidencia lista para cualquier disputa.</p>
       </div>
       <div class="cap reveal">
         <div class="cap-num">04 / Audit trail</div>
@@ -569,14 +621,15 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
     <!-- TAB 2 -->
     <div class="product-panel" id="t2" role="tabpanel">
       <div>
-        <span class="badge-soon">Próximamente</span>
-        <h3>Krew pasa de gestionar compliance a coordinar el trabajo real en terreno.</h3>
-        <p class="panel-sub">Una vez que la acreditación está resuelta, el siguiente paso natural es coordinar la operación sobre los mismos datos — sin duplicar sistemas ni reentrar información.</p>
+        <span class="badge-live">Disponible hoy</span>
+        <h3>El puente entre acreditación y trabajo real en terreno.</h3>
+        <p class="panel-sub">Una vez que el trabajador está acreditado, Krew coordina la operación sobre los mismos datos — sin duplicar sistemas ni reentrar información.</p>
         <ul class="feat-list">
-          <li><span class="arr">→</span>Asignación de cuadrillas y órdenes de trabajo vinculadas al estado documental</li>
-          <li><span class="arr">→</span>Control de acceso físico: sin documentación completa, no hay autorización de ingreso</li>
-          <li><span class="arr">→</span>Gestión de incidentes y permisos desde el celular, en tiempo real</li>
-          <li><span class="arr">→</span>Coordinación entre contratista y mandante en una sola plataforma</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Permiso de trabajo digital con firma móvil del supervisor</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Registro inmutable con timestamp de inicio y cierre</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Fotos de condiciones pre y post trabajo, checklists dinámicos por tipo de tarea</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Asignación de cuadrillas vinculada al estado documental</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Coordinación entre contratista y mandante en una sola plataforma</li>
         </ul>
       </div>
       <div>
@@ -600,7 +653,10 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
               <span class="pill red"><span class="dot"></span>Bloqueado</span>
             </div>
           </div>
-          <div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--divider);font-family:var(--font-mono);font-size:11px;color:var(--krew-cobre-suave);line-height:1.5;">Sin estado documental verde, la OT no se autoriza.</div>
+          <div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--divider);display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:var(--font-mono);font-size:11px;color:var(--krew-cobre-suave);line-height:1.5;">Sin estado documental vigente, la OT no se autoriza.</span>
+            <span class="live-dot">EN VIVO</span>
+          </div>
         </div>
       </div>
     </div>
@@ -762,13 +818,13 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
       </div>
       <div class="step reveal">
         <div class="step-num"><span>3</span></div>
-        <h3>El trabajador recibe su Krew Passport</h3>
-        <p>Credencial digital en el celular con QR de acceso válido para el día. Si hay un documento vencido, el QR se bloquea automáticamente — sin intervención humana.</p>
+        <h3>El trabajador entra con su Krew Passport — y trabaja con permiso digital</h3>
+        <p>QR de acceso válido para el día en el celular. Cuando el trabajo comienza, el PT digital registra el inicio, el supervisor firma, y Krew documenta condiciones, checklists y fotografías. Al cerrar, el registro queda inmutable.</p>
       </div>
       <div class="step reveal">
         <div class="step-num"><span>4</span></div>
-        <h3>El administrador tiene visibilidad completa</h3>
-        <p>Dashboard en tiempo real con el estado de toda su dotación: quién está listo, quién tiene algo pendiente, qué vence esta semana.</p>
+        <h3>El administrador y la mina tienen visibilidad completa</h3>
+        <p>Dashboard en tiempo real con el estado de toda la dotación, las OTs activas y los eventos de cumplimiento del día. Ante una fiscalización o una disputa de boleta, el expediente de evidencia está disponible en minutos.</p>
       </div>
     </div>
   </div>
@@ -781,57 +837,62 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
       <span class="eyebrow">Para quién es</span>
       <h2 class="h-section">Krew fue especialmente diseñado para quienes gestionan la operación — más visibilidad, en menos tiempo.</h2>
     </div>
-    <div class="audience-cards">
+    <div class="audience-cards grid-2x2">
       <div class="acard reveal">
         <div class="acard-num">01</div>
         <h3>El Administrador de Contratos</h3>
-        <p>Gestiona entre 5 y 20 contratos simultáneos con distintas minas, cada una con sus propios requisitos de acreditación. Hoy coordina eso con llamadas, correos y carpetas compartidas. Krew le da un solo lugar donde ver todo, actuar sobre lo que urge y documentar lo que se hizo.</p>
+        <p>Gestiona entre 5 y 20 contratos simultáneos con distintas minas, cada una con sus propios requisitos, plataformas y auditorías. Hoy coordina eso con llamadas, correos y carpetas compartidas. Krew le da un solo lugar donde ver todo, actuar sobre lo urgente y documentar todo — para todas las minas a la vez.</p>
       </div>
       <div class="acard reveal">
         <div class="acard-num">02</div>
-        <h3>El área de RRHH del contratista</h3>
-        <p>Recibe solicitudes de ingreso, persigue documentos de trabajadores, reenvía correos a la mina y resuelve rechazos en portería. Con Krew, los trabajadores se autogestionan sus recordatorios y el área responde a excepciones — no a urgencias cotidianas.</p>
+        <h3>El área de RRHH o jefe de acreditación</h3>
+        <p>Lleva más de 1.200 documentos activos para 150 trabajadores en 3 minas. Cada uno con su propia fecha, formato y lógica de validación por plataforma. Con Krew, los trabajadores se autogestionan sus recordatorios y el área responde a excepciones — no a urgencias cotidianas.</p>
       </div>
       <div class="acard reveal">
         <div class="acard-num">03</div>
+        <h3>El supervisor en terreno</h3>
+        <p>Necesita una sola confirmación antes de empezar el turno: que cada trabajador está autorizado para entrar y ejecutar la tarea. Krew se la da antes de salir al campamento — no en portería cuando ya es tarde.</p>
+      </div>
+      <div class="acard reveal">
+        <div class="acard-num">04</div>
         <h3>El área de acreditación de la mina</h3>
-        <p>Administra la documentación de 80 a 150 empresas contratistas en simultáneo. Sin una capa de visibilidad centralizada, cada validación es manual. Krew le entrega un dashboard con el estado real de cumplimiento de todos sus contratistas, actualizado en tiempo real.</p>
+        <p>Administra la documentación de 80 a 150 empresas contratistas en simultáneo. Sin visibilidad centralizada, cada validación es manual. Krew le entrega un dashboard con el estado real de cumplimiento de todos sus contratistas — más inteligencia sobre cuáles representan mayor riesgo operacional.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ROADMAP -->
-<section class="roadmap-section">
+<!-- UN SISTEMA, TRES MÓDULOS -->
+<section class="modules-section">
   <div class="container">
     <div class="section-head reveal">
-      <span class="eyebrow">Roadmap</span>
-      <h2 class="h-section">Empieza con acreditación. Termina con inteligencia operacional.</h2>
+      <span class="eyebrow">Cómo se conecta</span>
+      <h2 class="h-section">Cada módulo genera los datos que hace más poderoso al siguiente.</h2>
+      <p>Krew no es tres herramientas separadas. Es un sistema donde la acreditación alimenta la ejecución, y la ejecución produce la inteligencia que ningún proceso manual puede generar.</p>
     </div>
-    <div class="roadmap-timeline">
-      <div class="rnode reveal">
-        <div class="rdot active"></div>
-        <div class="stage">Hoy</div>
-        <span class="rb">En producción</span>
-        <h3>Readiness &amp; Compliance</h3>
-        <p>Acreditación de trabajadores y activos, seguimiento documental, cumplimiento regulatorio, registro EPP, dashboard del contratista y alertas predictivas con IA.</p>
-        <div class="note">La primera fuente de datos estructurados del ecosistema contratista.</div>
+    <div class="modules-flow">
+      <div class="mcard reveal">
+        <div class="mc-eyebrow">01</div>
+        <h3>ACCREDITATION</h3>
+        <p>Cada trabajador y activo acreditado en tiempo real. El estado documental determina quién puede entrar y qué trabajo puede ejecutar.</p>
+        <div class="mc-foot">los datos de acreditación habilitan la ejecución →</div>
       </div>
-      <div class="rnode reveal">
-        <div class="rdot outline"></div>
-        <div class="stage">Próximamente</div>
-        <h3>Coordinación Operacional</h3>
-        <p>Permisos de trabajo digitales, asignación de cuadrillas, órdenes de trabajo y checklists de terreno, reportes de incidentes y comunicación entre equipos de campo y oficina.</p>
-        <div class="note">Krew se convierte en el sistema operativo del trabajo en terreno.</div>
+      <div class="mflow-arrow" aria-hidden="true"><i data-lucide="arrow-right" style="width:22px;height:22px;"></i></div>
+      <div class="mcard reveal">
+        <div class="mc-eyebrow">02</div>
+        <h3>EXECUTION</h3>
+        <p>Permisos de trabajo digitales, asignación de cuadrillas, registro fotográfico de terreno, firma del supervisor. Cada acción queda documentada en el momento en que ocurre.</p>
+        <div class="mc-foot">el registro de ejecución alimenta la inteligencia →</div>
       </div>
-      <div class="rnode reveal">
-        <div class="rdot outline faint"></div>
-        <div class="stage">La visión</div>
-        <h3>Contract Intelligence</h3>
-        <p>Monitoreo automático de SLAs, detección de incumplimientos y evidencia para reclamos, scoring y benchmark de contratistas, paquetes de auditoría automáticos, autorización de pago vinculada a compliance.</p>
-        <div class="note">El único sistema con datos operacionales reales del ecosistema contratista chileno.</div>
+      <div class="mflow-arrow" aria-hidden="true"><i data-lucide="arrow-right" style="width:22px;height:22px;"></i></div>
+      <div class="mcard reveal">
+        <div class="mc-eyebrow">03</div>
+        <h3>INTELLIGENCE</h3>
+        <p>Score de riesgo por contratista, predicción de cobro, autorización de pago vinculada a compliance, benchmarks entre empresas. Respuestas que hoy no tienen sistema.</p>
+        <div class="mc-foot">&nbsp;</div>
       </div>
     </div>
+    <p class="modules-note">Un contratista que opera en cuatro minas distintas paga una sola suscripción y gestiona el cumplimiento de todas sus faenas desde un solo lugar. <strong>Krew traduce y sube la documentación a cada plataforma de mandante.</strong></p>
   </div>
 </section>
 

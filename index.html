@@ -3,401 +3,280 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>KREW — La acreditación de contratistas mineros, reinventada</title>
-<meta name="description" content="Krew reemplaza consultores, Excel y carpetas compartidas con una plataforma AI-native que gestiona cada documento, cada trabajador y cada activo — en tiempo real." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<title>KREW — Acreditación de contratistas mineros, con IA</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Jost:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
-:root {
-  --krew-caliche:        #F4EDE0;
-  --krew-terracota:      #7A3E1A;
-  --krew-cobre:          #D4622A;
-  --krew-dark-roast:     #1A1515;
-  --krew-roast-medio:    #2F2320;
-  --krew-cuerpo:         #2A1810;
-  --krew-cobre-suave:    #6B4A3E;
-  --krew-ocre:           #C49060;
+  :root {
+    --krew-caliche:        #F4EDE0;
+    --krew-terracota:      #7A3E1A;
+    --krew-cobre:          #D4622A;
+    --krew-dark-roast:     #1A1515;
+    --krew-roast-medio:    #2F2320;
+    --krew-cuerpo:         #2A1810;
+    --krew-cobre-suave:    #6B4A3E;
+    --krew-verde-activo:   #1A7A50;
+    --krew-ambar-alerta:   #C97820;
+    --krew-rojo-critico:   #B03020;
+    --krew-caliche-50:     #FAF6EE;
+    --krew-caliche-200:    #EBE0CC;
+    --krew-caliche-300:    #DCC9A9;
+    --krew-cobre-10:       rgba(212, 98, 42, 0.10);
+    --krew-cuerpo-10:      rgba(42, 24, 16, 0.10);
+    --krew-cuerpo-30:      rgba(42, 24, 16, 0.30);
+    --bg:                  var(--krew-caliche);
+    --bg-elevated:         var(--krew-caliche-50);
+    --bg-dark:             var(--krew-dark-roast);
+    --surface-card:        #FBF6EB;
+    --border:              var(--krew-caliche-300);
+    --border-strong:       #B89B72;
+    --divider:             var(--krew-caliche-200);
+    --fg-1:                var(--krew-cuerpo);
+    --fg-2:                var(--krew-cobre-suave);
+    --fg-3:                var(--krew-cuerpo-30);
+    --accent:              var(--krew-cobre);
+    --accent-hover:        #B8511F;
+    --accent-press:        #9C4218;
+    --font-wordmark: Georgia, "Times New Roman", serif;
+    --font-badge:    Jost, "Avant Garde", "Century Gothic", "Futura", sans-serif;
+    --font-sans:     Calibri, Carlito, "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-tagline:  Arial, Calibri, Carlito, sans-serif;
+    --font-mono:     "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+    --fs-h3:         24px;  --lh-h3: 1.25;
+    --fs-h4:         18px;  --lh-h4: 1.35;
+    --fs-body-lg:    18px;  --lh-body-lg: 1.55;
+    --fs-body:       15px;  --lh-body:    1.55;
+    --fs-body-sm:    13px;
+    --fs-eyebrow:    11px;  --ls-eyebrow: 0.18em;
+    --radius-sm:  4px;
+    --radius-md:  6px;
+    --radius-lg:  10px;
+    --radius-pill: 999px;
+    --radius-badge-pct: 9%;
+    --shadow-sm:  0 1px 2px rgba(42, 24, 16, 0.08), 0 1px 1px rgba(42, 24, 16, 0.04);
+    --shadow-lg:  0 12px 32px rgba(42, 24, 16, 0.10), 0 2px 6px rgba(42, 24, 16, 0.05);
+    --shadow-focus: 0 0 0 3px rgba(212, 98, 42, 0.30);
+    --ease-out:  cubic-bezier(0.22, 0.61, 0.36, 1);
+    --ease-std:  cubic-bezier(0.4, 0, 0.2, 1);
+    --dur-fast:  120ms;
+    --dur-base:  180ms;
+  }
 
-  --krew-verde-activo:   #1A7A50;
-  --krew-ambar-alerta:   #C97820;
-  --krew-rojo-critico:   #B03020;
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg-1);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    line-height: var(--lh-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-sans); margin: 0; font-weight: 700; color: var(--fg-1); }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: 0; background: none; padding: 0; color: inherit; }
+  ::selection { background: var(--accent); color: var(--krew-caliche); }
 
-  --krew-caliche-50:     #FAF6EE;
-  --krew-caliche-100:    #F4EDE0;
-  --krew-caliche-200:    #EBE0CC;
-  --krew-caliche-300:    #DCC9A9;
-  --krew-cobre-10:       rgba(212, 98, 42, 0.10);
-  --krew-cobre-20:       rgba(212, 98, 42, 0.20);
-  --krew-cuerpo-60:      rgba(42, 24, 16, 0.60);
-  --krew-cuerpo-30:      rgba(42, 24, 16, 0.30);
-  --krew-cuerpo-10:      rgba(42, 24, 16, 0.10);
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 720px) { .container { padding: 0 20px; } }
+  section { padding: 96px 0; position: relative; }
+  @media (max-width: 720px) { section { padding: 64px 0; } }
 
-  --bg:                  var(--krew-caliche);
-  --bg-elevated:         var(--krew-caliche-50);
-  --bg-dark:             var(--krew-dark-roast);
-  --surface-card:        #FBF6EB;
-  --border:              var(--krew-caliche-300);
-  --border-strong:       #B89B72;
-  --divider:             var(--krew-caliche-200);
+  .h-hero { font-family: var(--font-sans); font-weight: 700; font-size: clamp(36px, 5vw, 60px); line-height: 1.06; letter-spacing: -0.01em; color: var(--fg-1); text-wrap: balance; }
+  .h-section { font-family: var(--font-sans); font-weight: 700; font-size: clamp(28px, 3.4vw, 36px); line-height: 1.15; letter-spacing: -0.005em; color: var(--fg-1); text-wrap: balance; }
+  .h-cta { font-family: var(--font-sans); font-weight: 700; font-size: clamp(30px, 4vw, 44px); line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; }
+  .lead { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); color: var(--fg-2); }
 
-  --fg-1:                var(--krew-cuerpo);
-  --fg-2:                var(--krew-cobre-suave);
-  --fg-3:                var(--krew-cuerpo-30);
-  --fg-on-dark:          var(--krew-caliche);
-  --fg-on-dark-2:        #C9B9A2;
+  .eyebrow { display: inline-block; font-family: var(--font-sans); font-size: var(--fs-eyebrow); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .eyebrow-badge { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-sans); font-size: var(--fs-eyebrow); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--krew-terracota); background: var(--surface-card); padding: 7px 14px 7px 10px; border: 1px solid var(--border); border-radius: var(--radius-pill); }
+  .eyebrow-badge::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
 
-  --accent:              var(--krew-cobre);
-  --accent-hover:        #B8511F;
-  --accent-press:        #9C4218;
+  .k-badge { position: relative; border-radius: var(--radius-badge-pct); overflow: hidden; background: var(--krew-terracota); flex-shrink: 0; }
+  .k-badge .k { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-badge); font-weight: 700; color: var(--krew-caliche); line-height: 1; }
+  .k-badge .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 37%; background: var(--accent); }
+  .k-lockup { display: inline-flex; align-items: center; gap: 12px; }
+  .k-lockup-text { display: flex; flex-direction: column; line-height: 1; }
+  .k-lockup-text .word { font-family: var(--font-wordmark); font-weight: 700; letter-spacing: 0.08em; color: var(--fg-1); }
+  .k-lockup-text .tag { font-family: var(--font-tagline); letter-spacing: 0.155em; text-transform: uppercase; color: var(--krew-cobre-suave); margin-top: 4px; }
 
-  --font-wordmark: Georgia, "Times New Roman", serif;
-  --font-badge:    Jost, "Avant Garde", "Century Gothic", "Futura", sans-serif;
-  --font-sans:     Calibri, Carlito, "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-  --font-tagline:  Arial, Calibri, Carlito, sans-serif;
-  --font-mono:     "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  .nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--divider); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .nav-links { display: flex; gap: 36px; position: absolute; left: 50%; transform: translateX(-50%); }
+  .nav-link { font-size: 14px; font-weight: 600; color: var(--fg-1); transition: color var(--dur-fast) var(--ease-std); }
+  .nav-link:hover { color: var(--accent); }
+  .nav-cta { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; background: transparent; color: var(--fg-1); transition: background var(--dur-fast) var(--ease-std); }
+  .nav-cta:hover { background: var(--krew-cuerpo-10); }
+  @media (max-width: 880px) { .nav-links { display: none; } }
 
-  --fs-display:    72px;  --lh-display:    1.05;  --ls-display:    -0.01em;
-  --fs-h1:         48px;  --lh-h1:         1.10;  --ls-h1:         -0.005em;
-  --fs-h2:         32px;  --lh-h2:         1.18;  --ls-h2:         0em;
-  --fs-h3:         24px;  --lh-h3:         1.25;  --ls-h3:         0em;
-  --fs-h4:         18px;  --lh-h4:         1.35;  --ls-h4:         0.005em;
-  --fs-body-lg:    18px;  --lh-body-lg:    1.55;
-  --fs-body:       15px;  --lh-body:       1.55;
-  --fs-body-sm:    13px;  --lh-body-sm:    1.45;
-  --fs-caption:    12px;  --lh-caption:    1.40;  --ls-caption:    0.02em;
-  --fs-eyebrow:    11px;  --lh-eyebrow:    1.30;  --ls-eyebrow:    0.18em;
-  --fs-tagline:    13px;  --ls-tagline:    0.155em;
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 26px; border-radius: var(--radius-sm); font-weight: 600; font-size: 15px; letter-spacing: 0.005em; transition: background var(--dur-fast) var(--ease-std); white-space: nowrap; border: 1px solid transparent; font-family: var(--font-sans); }
+  .btn-primary { background: var(--accent); color: var(--krew-caliche); }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost { color: var(--accent); background: transparent; }
+  .btn-ghost:hover { background: var(--krew-cobre-10); }
 
-  --radius-xs:  2px;  --radius-sm:  4px;  --radius-md:  6px;
-  --radius-lg:  10px;  --radius-xl:  14px;  --radius-pill: 999px;
-  --radius-badge-pct: 9%;
+  .hero { padding-top: 120px; padding-bottom: 96px; text-align: center; }
+  .hero h1 { max-width: 1040px; margin: 24px auto 0; text-wrap: balance; }
+  .hero-sub { margin: 28px auto 0; max-width: 680px; font-size: var(--fs-body-lg); color: var(--fg-2); line-height: var(--lh-body-lg); }
+  .hero-ctas { margin-top: 44px; display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
 
-  --shadow-xs:  0 1px 0 rgba(42, 24, 16, 0.06);
-  --shadow-sm:  0 1px 2px rgba(42, 24, 16, 0.08), 0 1px 1px rgba(42, 24, 16, 0.04);
-  --shadow-md:  0 4px 12px rgba(42, 24, 16, 0.08), 0 1px 2px rgba(42, 24, 16, 0.04);
-  --shadow-lg:  0 12px 32px rgba(42, 24, 16, 0.10), 0 2px 6px rgba(42, 24, 16, 0.05);
-  --shadow-focus: 0 0 0 3px rgba(212, 98, 42, 0.30);
+  .section--elevated { background: var(--bg-elevated); }
+  .section-head { text-align: center; max-width: 760px; margin: 0 auto; }
+  .section-head p { margin: 24px auto 0; font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); color: var(--fg-2); max-width: 660px; text-wrap: pretty; }
 
-  --ease-out:  cubic-bezier(0.22, 0.61, 0.36, 1);
-  --ease-std:  cubic-bezier(0.4, 0, 0.2, 1);
-  --dur-fast:  120ms;
-  --dur-base:  180ms;
-}
+  .pcards { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 880px) { .pcards { grid-template-columns: 1fr; } }
+  .pcard { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: border-color var(--dur-base) var(--ease-std); }
+  .pcard:hover { border-color: var(--border-strong); }
+  .pcard-ico { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--krew-cobre-10); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+  .pcard h3 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.3; margin-bottom: 12px; color: var(--fg-1); }
+  .pcard p { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-2); }
 
-*, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
-body {
-  background: var(--bg);
-  color: var(--fg-1);
-  font-family: var(--font-sans);
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-}
-h1, h2, h3, h4 { font-family: var(--font-sans); margin: 0; font-weight: 700; color: var(--fg-1); }
-p { margin: 0; }
-a { color: inherit; text-decoration: none; }
-button { font-family: inherit; cursor: pointer; border: 0; background: none; padding: 0; color: inherit; }
-::selection { background: var(--accent); color: var(--krew-caliche); }
+  .caps { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--divider); border-left: 1px solid var(--divider); }
+  @media (max-width: 720px) { .caps { grid-template-columns: 1fr; } }
+  .cap { padding: 36px; border-right: 1px solid var(--divider); border-bottom: 1px solid var(--divider); background: var(--surface-card); }
+  .cap-num { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 16px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .cap h3 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.3; margin-bottom: 12px; color: var(--fg-1); }
+  .cap p { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-2); }
 
-.container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
-@media (max-width: 720px) { .container { padding: 0 20px; } }
-section { padding: 96px 0; position: relative; }
-@media (max-width: 720px) { section { padding: 64px 0; } }
+  .badge-live { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-eyebrow); font-weight: 700; text-transform: uppercase; letter-spacing: var(--ls-eyebrow); padding: 4px 12px 4px 10px; border-radius: var(--radius-pill); margin-bottom: 20px; background: rgba(26,122,80,0.10); color: var(--krew-verde-activo); border: 1px solid rgba(26,122,80,0.22); }
+  .badge-live::before { content: ""; width: 7px; height: 7px; background: var(--krew-verde-activo); border-radius: 50%; }
 
-.h-hero { font-family: var(--font-sans); font-weight: 700; font-size: clamp(36px, 5vw, 60px); line-height: 1.06; letter-spacing: -0.01em; color: var(--fg-1); text-wrap: balance; }
-.h-section { font-family: var(--font-sans); font-weight: 700; font-size: clamp(28px, 3.4vw, 36px); line-height: 1.15; letter-spacing: -0.005em; color: var(--fg-1); text-wrap: balance; }
-.h-cta { font-family: var(--font-sans); font-weight: 700; font-size: clamp(30px, 4vw, 44px); line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; }
-.lead { font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); color: var(--fg-2); }
+  .product-head { text-align: center; max-width: 760px; margin: 0 auto; }
+  .product-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; margin-top: 56px; }
+  @media (max-width: 980px) { .product-panel { grid-template-columns: 1fr; gap: 48px; } }
+  .product-panel h3 { font-size: var(--fs-h3); font-weight: 700; line-height: 1.2; margin-bottom: 18px; letter-spacing: -0.005em; }
+  .product-panel .panel-sub { font-size: var(--fs-body-lg); color: var(--fg-2); line-height: var(--lh-body-lg); margin-bottom: 28px; }
+  .feat-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .feat-list li { display: flex; gap: 14px; align-items: flex-start; font-size: var(--fs-body); color: var(--fg-1); line-height: 1.55; }
+  .feat-list .ico { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; color: var(--accent); }
+  .sub-passport-block { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--divider); }
+  .sub-passport-block .lbl { font-family: var(--font-sans); font-size: var(--fs-eyebrow); color: var(--accent); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
+  .sub-passport-block p { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-2); }
 
-.eyebrow { display: inline-block; font-family: var(--font-sans); font-size: var(--fs-eyebrow); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
-.eyebrow-badge { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-sans); font-size: var(--fs-eyebrow); font-weight: 700; letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--krew-terracota); background: var(--surface-card); padding: 7px 14px 7px 10px; border: 1px solid var(--border); border-radius: var(--radius-pill); }
-.eyebrow-badge::before { content: ""; width: 8px; height: 8px; background: var(--accent); border-radius: 2px; flex-shrink: 0; }
-.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+  .phone-wrap { display: flex; justify-content: center; }
+  .phone { width: 310px; background: var(--krew-dark-roast); border-radius: 38px; padding: 10px; position: relative; box-shadow: var(--shadow-lg); }
+  .phone-screen { background: var(--krew-caliche); border-radius: 30px; overflow: hidden; position: relative; aspect-ratio: 9 / 19.5; display: flex; flex-direction: column; }
+  .phone-notch { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 100px; height: 22px; background: var(--krew-dark-roast); border-radius: 14px; z-index: 6; }
+  .pp-header { background: var(--krew-dark-roast); color: var(--krew-caliche); padding: 38px 18px 16px; text-align: center; position: relative; }
+  .pp-header::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--accent); }
+  .pp-header .brand { display: inline-flex; align-items: center; gap: 10px; }
+  .pp-header .brand .badge { width: 22px; height: 22px; border-radius: 9%; background: var(--krew-roast-medio); position: relative; overflow: hidden; }
+  .pp-header .brand .badge .k { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-badge); font-weight: 700; color: var(--krew-caliche); font-size: 14px; line-height: 1; transform: translateY(-2px); }
+  .pp-header .brand .badge .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 37%; background: var(--accent); }
+  .pp-header .brand .word { font-family: var(--font-wordmark); font-weight: 700; font-size: 14px; letter-spacing: 0.18em; color: var(--krew-caliche); }
+  .pp-header .brand .tag { font-family: var(--font-tagline); font-size: 9px; letter-spacing: 0.16em; color: var(--krew-cobre); }
+  .pp-body { flex: 1; padding: 18px 18px 14px; display: flex; flex-direction: column; background: var(--krew-caliche); overflow: hidden; }
+  .pp-name { font-family: var(--font-sans); font-weight: 700; font-size: 18px; color: var(--fg-1); line-height: 1.2; }
+  .pp-meta { font-size: 12px; color: var(--fg-2); margin-top: 4px; line-height: 1.5; }
+  .pp-meta .mono { font-size: 11px; color: var(--fg-1); }
+  .pp-section-lbl { margin-top: 16px; font-family: var(--font-sans); font-size: 9px; font-weight: 700; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--divider); }
+  .pp-cert { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--divider); font-size: 11px; line-height: 1.4; }
+  .pp-cert:last-of-type { border-bottom: 0; }
+  .pp-cert-ico { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; }
+  .pp-cert.green .pp-cert-ico { color: var(--krew-verde-activo); }
+  .pp-cert.yellow .pp-cert-ico { color: var(--krew-ambar-alerta); }
+  .pp-cert-title { font-weight: 600; color: var(--fg-1); }
+  .pp-cert-sub { font-size: 10px; color: var(--fg-2); margin-top: 1px; }
+  .pp-cert.yellow .pp-cert-sub { color: var(--krew-ambar-alerta); font-weight: 600; }
+  .pp-qr { margin: 14px auto 8px; width: 112px; height: 112px; background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px; }
+  .pp-qr svg { width: 100%; height: 100%; }
+  .pp-footer { border-top: 1px solid var(--divider); margin-top: auto; padding-top: 10px; font-family: var(--font-sans); font-size: 9px; text-align: center; color: var(--krew-cobre-suave); letter-spacing: 0.10em; text-transform: uppercase; font-weight: 600; }
 
-.k-badge { position: relative; border-radius: var(--radius-badge-pct); overflow: hidden; background: var(--krew-terracota); flex-shrink: 0; }
-.k-badge .k { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-badge); font-weight: 700; color: var(--krew-caliche); line-height: 1; }
-.k-badge .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 37%; background: var(--accent); }
-.k-lockup { display: inline-flex; align-items: center; gap: 12px; }
-.k-lockup-text { display: flex; flex-direction: column; line-height: 1; }
-.k-lockup-text .word { font-family: var(--font-wordmark); font-weight: 700; letter-spacing: 0.08em; color: var(--fg-1); }
-.k-lockup-text .tag { font-family: var(--font-tagline); letter-spacing: 0.155em; text-transform: uppercase; color: var(--krew-cobre-suave); margin-top: 4px; }
+  .mockup-block { margin-top: 96px; display: flex; gap: 64px; align-items: flex-start; }
+  .mockup-block.reverse { flex-direction: row-reverse; }
+  .mockup-block > .mockup-info { width: 320px; flex-shrink: 0; }
+  .mockup-block > .mockup-frame { flex: 1; min-width: 0; }
+  .mockup-block > .phone-wrap { width: 310px; flex-shrink: 0; }
+  .mockup-block.with-phone > .mockup-info { width: auto; flex: 1; max-width: 540px; }
+  @media (max-width: 880px) { .mockup-block, .mockup-block.reverse { flex-direction: column; gap: 32px; } .mockup-block > .mockup-info { width: 100%; } .mockup-block > .phone-wrap { width: 100%; display: flex; justify-content: center; } }
+  .mockup-info { padding-top: 8px; }
+  .mockup-info .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-bottom: 14px; }
+  .mockup-info h3 { font-size: var(--fs-h3); font-weight: 700; margin-bottom: 14px; line-height: 1.2; }
+  .mockup-info p { font-size: var(--fs-body); color: var(--fg-2); line-height: var(--lh-body); }
+  .mockup-info .meta { margin-top: 18px; font-family: var(--font-mono); font-size: 11px; color: var(--krew-cobre-suave); line-height: 1.6; }
+  .mockup-frame { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
 
-.nav { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--divider); }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; position: relative; }
-.nav-links { display: flex; gap: 36px; position: absolute; left: 50%; transform: translateX(-50%); }
-.nav-link { font-size: 14px; font-weight: 600; color: var(--fg-1); transition: color var(--dur-fast) var(--ease-std); }
-.nav-link:hover { color: var(--accent); }
-.nav-cta { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; background: transparent; color: var(--fg-1); transition: background var(--dur-fast) var(--ease-std); }
-.nav-cta:hover { background: var(--krew-cuerpo-10); }
-@media (max-width: 880px) { .nav-links { display: none; } }
+  .dash-bar { padding: 14px 22px; border-bottom: 1px solid var(--divider); display: flex; align-items: center; justify-content: space-between; background: var(--surface-card); }
+  .dash-bar-left { display: flex; align-items: center; gap: 14px; }
+  .dash-bar-left .tag { font-family: var(--font-mono); font-size: 10px; color: var(--accent); letter-spacing: 0.10em; text-transform: uppercase; font-weight: 600; }
+  .dash-bar-left .title { font-family: var(--font-sans); font-weight: 700; font-size: 15px; color: var(--fg-1); }
+  .dash-bar-right { display: flex; gap: 6px; }
+  .dash-chip { font-family: var(--font-mono); font-size: 10px; padding: 5px 11px; border: 1px solid var(--border); border-radius: var(--radius-pill); color: var(--fg-2); background: var(--bg); font-weight: 600; }
+  .dash-chip.active { background: var(--accent); color: var(--krew-caliche); border-color: var(--accent); }
+  .dash-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--divider); background: var(--bg); }
+  .dash-stat { padding: 18px 22px; border-right: 1px solid var(--divider); }
+  .dash-stat:last-child { border-right: 0; }
+  .dash-stat .lbl { font-family: var(--font-sans); font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .dash-stat .num { font-family: var(--font-sans); font-weight: 700; font-size: 30px; letter-spacing: -0.01em; line-height: 1; color: var(--fg-1); }
+  .dash-stat .num.green { color: var(--krew-verde-activo); }
+  .dash-stat .num.yellow { color: var(--krew-ambar-alerta); }
+  .dash-stat .num.red { color: var(--krew-rojo-critico); }
+  .dash-table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--bg); }
+  .dash-table thead th { font-family: var(--font-sans); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.10em; color: var(--accent); padding: 12px 22px; text-align: left; background: var(--surface-card); border-bottom: 1px solid var(--divider); }
+  .dash-table tbody td { padding: 14px 22px; border-bottom: 1px solid var(--divider); vertical-align: middle; color: var(--fg-1); }
+  .dash-table tbody tr:last-child td { border-bottom: 0; }
+  .dash-table tbody tr:hover td { background: var(--krew-cuerpo-10); }
+  .dash-table .name { font-weight: 600; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: var(--radius-pill); }
+  .pill .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .pill.green { background: rgba(26,122,80,0.08); color: var(--krew-verde-activo); border: 1px solid rgba(26,122,80,0.20); }
+  .pill.green .dot { background: var(--krew-verde-activo); }
+  .pill.yellow { background: rgba(201,120,32,0.08); color: var(--krew-ambar-alerta); border: 1px solid rgba(201,120,32,0.22); }
+  .pill.yellow .dot { background: var(--krew-ambar-alerta); }
+  .pill.red { background: rgba(176,48,32,0.08); color: var(--krew-rojo-critico); border: 1px solid rgba(176,48,32,0.22); }
+  .pill.red .dot { background: var(--krew-rojo-critico); }
 
-.btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 26px; border-radius: var(--radius-sm); font-weight: 600; font-size: 15px; letter-spacing: 0.005em; transition: background var(--dur-fast) var(--ease-std), color var(--dur-fast); white-space: nowrap; border: 1px solid transparent; font-family: var(--font-sans); }
-.btn-primary { background: var(--accent); color: var(--krew-caliche); }
-.btn-primary:hover { background: var(--accent-hover); }
-.btn-ghost { color: var(--accent); background: transparent; }
-.btn-ghost:hover { background: var(--krew-cobre-10); }
+  .stepper { margin-top: 72px; position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .stepper::before { content: ""; position: absolute; top: 24px; left: 0; right: 0; height: 1px; background: var(--divider); z-index: 0; }
+  @media (max-width: 880px) { .stepper { grid-template-columns: 1fr; } .stepper::before { display: none; } }
+  .step { background: var(--bg-elevated); position: relative; z-index: 1; padding-right: 12px; }
+  .step-num { width: 48px; height: 48px; border-radius: var(--radius-badge-pct); background: var(--krew-terracota); color: var(--krew-caliche); display: flex; align-items: center; justify-content: center; font-family: var(--font-badge); font-weight: 700; font-size: 22px; margin-bottom: 24px; position: relative; overflow: hidden; }
+  .step-num::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 30%; background: var(--accent); }
+  .step-num span { position: relative; z-index: 1; transform: translateY(-3px); }
+  .step h3 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.3; margin-bottom: 10px; color: var(--fg-1); }
+  .step p { font-size: var(--fs-body-sm); color: var(--fg-2); line-height: 1.6; }
 
-.hero { padding-top: 120px; padding-bottom: 96px; text-align: center; }
-.hero h1 { max-width: 1000px; margin: 24px auto 0; text-wrap: balance; }
-.hero-sub { margin: 28px auto 0; max-width: 640px; font-size: var(--fs-body-lg); color: var(--fg-2); line-height: var(--lh-body-lg); }
-.hero-ctas { margin-top: 44px; display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .audience-cards { margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 880px) { .audience-cards { grid-template-columns: 1fr; } }
+  .acard { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px; background: var(--surface-card); transition: border-color var(--dur-base); display: flex; flex-direction: column; }
+  .acard:hover { border-color: var(--border-strong); }
+  .acard-num { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 18px; }
+  .acard h3 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.3; margin-bottom: 16px; }
+  .acard p { font-size: var(--fs-body); color: var(--fg-2); line-height: var(--lh-body); }
 
-.hero-strip { margin-top: 88px; background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; position: relative; }
-.hero-strip::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--accent); }
-.hero-strip-grid { display: grid; grid-template-columns: repeat(4, 1fr); text-align: left; }
-@media (max-width: 720px) { .hero-strip-grid { grid-template-columns: 1fr 1fr; } }
-.strip-item { padding: 28px; border-right: 1px solid var(--divider); }
-.hero-strip-grid > :last-child { border-right: 0; }
-@media (max-width: 720px) {
-  .strip-item { padding: 22px 20px; }
-  .strip-item:nth-child(2) { border-right: 0; }
-  .strip-item:nth-child(3), .strip-item:nth-child(4) { border-top: 1px solid var(--divider); }
-}
-.strip-k { font-family: var(--font-sans); font-weight: 700; font-size: 30px; letter-spacing: -0.01em; color: var(--fg-1); line-height: 1; }
-.strip-l { font-size: 13px; color: var(--fg-2); margin-top: 8px; line-height: 1.45; }
+  .cta-section { text-align: center; }
+  .cta-section .h-cta { max-width: 780px; margin: 0 auto; }
+  .cta-section .lead { margin: 24px auto 0; max-width: 660px; }
+  .cta-buttons { margin-top: 40px; display: flex; justify-content: center; gap: 12px; }
+  .form { margin: 56px auto 0; max-width: 520px; text-align: left; border-top: 1px solid var(--divider); padding-top: 48px; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .form-row label { font-family: var(--font-sans); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.10em; font-weight: 700; }
+  .form-row input, .form-row textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elevated); font-family: var(--font-sans); font-size: 15px; color: var(--fg-1); transition: border-color var(--dur-fast), box-shadow var(--dur-fast); }
+  .form-row textarea { resize: vertical; min-height: 80px; }
+  .form-row input::placeholder, .form-row textarea::placeholder { color: var(--fg-3); }
+  .form-row input:focus, .form-row textarea:focus { outline: 0; border-color: var(--accent); box-shadow: var(--shadow-focus); }
+  .form-submit { width: 100%; padding: 14px; background: var(--accent); color: var(--krew-caliche); font-size: 15px; font-weight: 600; border-radius: var(--radius-sm); margin-top: 8px; transition: background var(--dur-fast); letter-spacing: 0.01em; }
+  .form-submit:hover { background: var(--accent-hover); }
+  .form-success { text-align: center; padding: 48px 28px; border: 1px solid var(--border); background: var(--surface-card); border-radius: var(--radius-lg); margin-top: 24px; }
 
-.section--elevated { background: var(--bg-elevated); }
-.section-head { text-align: center; max-width: 760px; margin: 0 auto; }
-.section-head p { margin: 24px auto 0; font-size: var(--fs-body-lg); line-height: var(--lh-body-lg); color: var(--fg-2); max-width: 660px; text-wrap: pretty; }
+  footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(--bg); }
+  .footer-inner { display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; gap: 24px; }
+  @media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr; text-align: left; gap: 16px; } }
+  .footer-center { text-align: center; font-family: var(--font-mono); font-size: 13px; color: var(--fg-2); display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
+  .footer-center a { color: var(--fg-1); }
+  .footer-center a:hover { color: var(--accent); text-decoration: underline; }
+  .footer-right { text-align: right; font-family: var(--font-mono); font-size: 12px; color: var(--fg-2); }
+  @media (max-width: 720px) { .footer-right { text-align: left; } }
 
-.pcards { margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-@media (max-width: 880px) { .pcards { grid-template-columns: 1fr; } }
-.pcard { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; transition: border-color var(--dur-base) var(--ease-std); }
-.pcard:hover { border-color: var(--border-strong); }
-.pcard-ico { width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--krew-cobre-10); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
-.pcard h3 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.3; margin-bottom: 12px; color: var(--fg-1); }
-.pcard p { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-2); }
-
-.caps { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--divider); border-left: 1px solid var(--divider); }
-@media (max-width: 720px) { .caps { grid-template-columns: 1fr; } }
-.cap { padding: 36px; border-right: 1px solid var(--divider); border-bottom: 1px solid var(--divider); }
-.cap-num { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 16px; letter-spacing: 0.04em; }
-.cap h3 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.3; margin-bottom: 12px; color: var(--fg-1); }
-.cap p { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-2); }
-
-.product-tabs { margin-top: 56px; display: flex; gap: 0; border-bottom: 1px solid var(--divider); }
-.product-tab { padding: 14px 22px; font-size: 13px; font-weight: 600; color: var(--fg-2); background: transparent; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; letter-spacing: 0.04em; text-transform: uppercase; transition: color var(--dur-fast), border-color var(--dur-fast); display: inline-flex; align-items: center; gap: 8px; }
-.product-tab .num { font-family: var(--font-mono); color: var(--krew-cobre-suave); font-size: 12px; }
-.product-tab:hover { color: var(--fg-1); }
-.product-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-.product-tab.active .num { color: var(--accent); }
-@media (max-width: 720px) {
-  .product-tabs { flex-direction: column; border-bottom: 0; gap: 8px; }
-  .product-tab { border: 1px solid var(--border); border-radius: var(--radius-sm); text-align: left; margin-bottom: 0; }
-  .product-tab.active { border-color: var(--accent); background: var(--krew-cobre-10); }
-}
-.product-panel { display: none; padding-top: 56px; }
-.product-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-@media (max-width: 980px) { .product-panel.active { grid-template-columns: 1fr; gap: 48px; } }
-.product-panel h3 { font-size: var(--fs-h3); font-weight: 700; line-height: 1.2; margin-bottom: 18px; letter-spacing: -0.005em; }
-.product-panel .panel-sub { font-size: var(--fs-body-lg); color: var(--fg-2); line-height: var(--lh-body-lg); margin-bottom: 28px; }
-.feat-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
-.feat-list li { display: flex; gap: 14px; align-items: flex-start; font-size: var(--fs-body); color: var(--fg-1); line-height: 1.55; }
-.feat-list .ico { flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px; color: var(--accent); }
-.feat-list .arr { flex-shrink: 0; width: 18px; color: var(--krew-cobre-suave); font-weight: 600; margin-top: 1px; }
-
-.badge-soon, .badge-live { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-eyebrow); font-weight: 700; text-transform: uppercase; letter-spacing: var(--ls-eyebrow); padding: 4px 12px 4px 10px; border-radius: var(--radius-pill); margin-bottom: 20px; }
-.badge-live { background: rgba(26,122,80,0.10); color: var(--krew-verde-activo); border: 1px solid rgba(26,122,80,0.22); }
-.badge-live::before { content: ""; width: 7px; height: 7px; background: var(--krew-verde-activo); border-radius: 50%; }
-.badge-soon { background: var(--krew-cuerpo-10); color: var(--krew-cobre-suave); border: 1px solid var(--border); }
-.badge-soon::before { content: ""; width: 7px; height: 7px; background: var(--krew-cobre-suave); border-radius: 50%; }
-
-.sub-passport-block { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--divider); }
-.sub-passport-block .lbl { font-family: var(--font-sans); font-size: var(--fs-eyebrow); color: var(--accent); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
-.sub-passport-block p { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-2); }
-
-.phone-wrap { display: flex; justify-content: center; }
-.phone { width: 310px; background: var(--krew-dark-roast); border-radius: 38px; padding: 10px; position: relative; box-shadow: var(--shadow-lg); }
-.phone-screen { background: var(--krew-caliche); border-radius: 30px; overflow: hidden; position: relative; aspect-ratio: 9 / 19.5; display: flex; flex-direction: column; }
-.phone-notch { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 100px; height: 22px; background: var(--krew-dark-roast); border-radius: 14px; z-index: 6; }
-.pp-header { background: var(--krew-dark-roast); color: var(--krew-caliche); padding: 38px 18px 16px; text-align: center; position: relative; }
-.pp-header::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--accent); }
-.pp-header .brand { display: inline-flex; align-items: center; gap: 10px; }
-.pp-header .brand .badge { width: 22px; height: 22px; border-radius: 9%; background: var(--krew-roast-medio); position: relative; overflow: hidden; }
-.pp-header .brand .badge .k { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-badge); font-weight: 700; color: var(--krew-caliche); font-size: 14px; line-height: 1; transform: translateY(-2px); }
-.pp-header .brand .badge .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 37%; background: var(--accent); }
-.pp-header .brand .word { font-family: var(--font-wordmark); font-weight: 700; font-size: 14px; letter-spacing: 0.18em; color: var(--krew-caliche); }
-.pp-header .brand .tag { font-family: var(--font-tagline); font-size: 9px; letter-spacing: 0.16em; color: var(--krew-cobre); }
-.pp-body { flex: 1; padding: 18px 18px 14px; display: flex; flex-direction: column; background: var(--krew-caliche); overflow: hidden; }
-.pp-name { font-family: var(--font-sans); font-weight: 700; font-size: 18px; color: var(--fg-1); line-height: 1.2; }
-.pp-meta { font-size: 12px; color: var(--fg-2); margin-top: 4px; line-height: 1.5; }
-.pp-meta .mono { font-size: 11px; color: var(--fg-1); }
-.pp-section-lbl { margin-top: 16px; font-family: var(--font-sans); font-size: 9px; font-weight: 700; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; padding-bottom: 8px; border-bottom: 1px solid var(--divider); }
-.pp-cert { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--divider); font-size: 11px; line-height: 1.4; }
-.pp-cert:last-of-type { border-bottom: 0; }
-.pp-cert-ico { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; }
-.pp-cert.green .pp-cert-ico { color: var(--krew-verde-activo); }
-.pp-cert.yellow .pp-cert-ico { color: var(--krew-ambar-alerta); }
-.pp-cert.red .pp-cert-ico { color: var(--krew-rojo-critico); }
-.pp-cert-title { font-weight: 600; color: var(--fg-1); }
-.pp-cert-sub { font-size: 10px; color: var(--fg-2); margin-top: 1px; }
-.pp-cert.yellow .pp-cert-sub { color: var(--krew-ambar-alerta); font-weight: 600; }
-.pp-cert.red .pp-cert-sub { color: var(--krew-rojo-critico); font-weight: 600; }
-.pp-qr { margin: 14px auto 8px; width: 112px; height: 112px; background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px; }
-.pp-qr svg { width: 100%; height: 100%; }
-.pp-footer { border-top: 1px solid var(--divider); margin-top: auto; padding-top: 10px; font-family: var(--font-sans); font-size: 9px; text-align: center; color: var(--krew-cobre-suave); letter-spacing: 0.10em; text-transform: uppercase; font-weight: 600; }
-
-.mockup-block { margin-top: 96px; display: flex; gap: 64px; align-items: flex-start; }
-.mockup-block.reverse { flex-direction: row-reverse; }
-.mockup-block > .mockup-info { width: 320px; flex-shrink: 0; }
-.mockup-block > .mockup-frame { flex: 1; min-width: 0; }
-.mockup-block > .phone-wrap { width: 310px; flex-shrink: 0; }
-.mockup-block.with-phone > .mockup-info { width: auto; flex: 1; max-width: 540px; }
-@media (max-width: 880px) {
-  .mockup-block, .mockup-block.reverse { flex-direction: column; gap: 32px; }
-  .mockup-block > .mockup-info { width: 100%; }
-  .mockup-block > .phone-wrap { width: 100%; display: flex; justify-content: center; }
-}
-.mockup-info { padding-top: 8px; }
-.mockup-info .lbl { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; margin-bottom: 14px; }
-.mockup-info h3 { font-size: var(--fs-h3); font-weight: 700; margin-bottom: 14px; line-height: 1.2; }
-.mockup-info p { font-size: var(--fs-body); color: var(--fg-2); line-height: var(--lh-body); }
-.mockup-info .meta { margin-top: 18px; font-family: var(--font-mono); font-size: 11px; color: var(--krew-cobre-suave); line-height: 1.6; }
-.mockup-frame { background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
-
-.dash-bar { padding: 14px 22px; border-bottom: 1px solid var(--divider); display: flex; align-items: center; justify-content: space-between; background: var(--surface-card); }
-.dash-bar-left { display: flex; align-items: center; gap: 14px; }
-.dash-bar-left .tag { font-family: var(--font-mono); font-size: 10px; color: var(--accent); letter-spacing: 0.10em; text-transform: uppercase; font-weight: 600; }
-.dash-bar-left .title { font-family: var(--font-sans); font-weight: 700; font-size: 15px; color: var(--fg-1); }
-.dash-bar-right { display: flex; gap: 6px; }
-.dash-chip { font-family: var(--font-mono); font-size: 10px; padding: 5px 11px; border: 1px solid var(--border); border-radius: var(--radius-pill); color: var(--fg-2); background: var(--bg); font-weight: 600; }
-.dash-chip.active { background: var(--accent); color: var(--krew-caliche); border-color: var(--accent); }
-.dash-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--divider); background: var(--bg); }
-.dash-stat { padding: 18px 22px; border-right: 1px solid var(--divider); }
-.dash-stat:last-child { border-right: 0; }
-.dash-stat .lbl { font-family: var(--font-sans); font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-.dash-stat .num { font-family: var(--font-sans); font-weight: 700; font-size: 30px; letter-spacing: -0.01em; line-height: 1; color: var(--fg-1); }
-.dash-stat .num.green { color: var(--krew-verde-activo); }
-.dash-stat .num.yellow { color: var(--krew-ambar-alerta); }
-.dash-stat .num.red { color: var(--krew-rojo-critico); }
-.dash-table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--bg); }
-.dash-table thead th { font-family: var(--font-sans); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.10em; color: var(--accent); padding: 12px 22px; text-align: left; background: var(--surface-card); border-bottom: 1px solid var(--divider); }
-.dash-table tbody td { padding: 14px 22px; border-bottom: 1px solid var(--divider); vertical-align: middle; color: var(--fg-1); }
-.dash-table tbody tr:last-child td { border-bottom: 0; }
-.dash-table tbody tr:hover td { background: var(--krew-cuerpo-10); }
-.dash-table .name { font-weight: 600; color: var(--fg-1); }
-
-.pill { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-sans); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: var(--radius-pill); letter-spacing: 0.01em; }
-.pill .dot { width: 6px; height: 6px; border-radius: 50%; }
-.pill.green { background: rgba(26,122,80,0.08); color: var(--krew-verde-activo); border: 1px solid rgba(26,122,80,0.20); }
-.pill.green .dot { background: var(--krew-verde-activo); }
-.pill.yellow { background: rgba(201,120,32,0.08); color: var(--krew-ambar-alerta); border: 1px solid rgba(201,120,32,0.22); }
-.pill.yellow .dot { background: var(--krew-ambar-alerta); }
-.pill.red { background: rgba(176,48,32,0.08); color: var(--krew-rojo-critico); border: 1px solid rgba(176,48,32,0.22); }
-.pill.red .dot { background: var(--krew-rojo-critico); }
-.risk { font-family: var(--font-sans); font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
-.risk.low { color: var(--krew-verde-activo); }
-.risk.med { color: var(--krew-ambar-alerta); }
-.risk.high { color: var(--krew-rojo-critico); }
-
-.stepper { margin-top: 72px; position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.stepper::before { content: ""; position: absolute; top: 24px; left: 0; right: 0; height: 1px; background: var(--divider); z-index: 0; }
-@media (max-width: 880px) { .stepper { grid-template-columns: 1fr; } .stepper::before { display: none; } }
-.step { background: var(--bg-elevated); position: relative; z-index: 1; padding-right: 12px; }
-.step-num { width: 48px; height: 48px; border-radius: var(--radius-badge-pct); background: var(--krew-terracota); color: var(--krew-caliche); display: flex; align-items: center; justify-content: center; font-family: var(--font-badge); font-weight: 700; font-size: 22px; margin-bottom: 24px; position: relative; overflow: hidden; }
-.step-num::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 30%; background: var(--accent); }
-.step-num span { position: relative; z-index: 1; transform: translateY(-3px); }
-.step h3 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.3; margin-bottom: 10px; color: var(--fg-1); }
-.step p { font-size: var(--fs-body-sm); color: var(--fg-2); line-height: 1.6; }
-
-.audience-cards { margin-top: 64px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-@media (max-width: 880px) { .audience-cards { grid-template-columns: 1fr; } }
-.acard { border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 36px; background: var(--surface-card); transition: border-color var(--dur-base); display: flex; flex-direction: column; }
-.acard:hover { border-color: var(--border-strong); }
-.acard-num { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 18px; }
-.acard h3 { font-size: var(--fs-h4); font-weight: 700; line-height: 1.3; margin-bottom: 16px; }
-.acard p { font-size: var(--fs-body); color: var(--fg-2); line-height: var(--lh-body); }
-
-.roadmap-section { background: var(--bg-dark); color: var(--fg-on-dark); }
-.roadmap-section .h-section { color: var(--fg-on-dark); }
-.roadmap-section .eyebrow { color: var(--krew-cobre); }
-.roadmap-section .section-head p { color: var(--fg-on-dark-2); }
-.roadmap-timeline { margin-top: 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; position: relative; }
-.roadmap-timeline::before { content: ""; position: absolute; top: 14px; left: 8%; right: 8%; height: 1px; background: rgba(244,237,224,0.18); z-index: 0; }
-@media (max-width: 880px) { .roadmap-timeline { grid-template-columns: 1fr; gap: 48px; } .roadmap-timeline::before { display: none; } }
-.rnode { position: relative; z-index: 1; padding: 0 24px 0 0; }
-.rnode + .rnode { padding-left: 32px; }
-.rdot { width: 28px; height: 28px; border-radius: var(--radius-badge-pct); margin-bottom: 28px; position: relative; overflow: hidden; }
-.rdot.active { background: var(--krew-terracota); }
-.rdot.active::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 40%; background: var(--accent); }
-.rdot.outline { background: var(--krew-roast-medio); border: 1px solid rgba(244,237,224,0.30); }
-.rdot.outline.faint { border-color: rgba(244,237,224,0.15); }
-.rnode .stage { font-family: var(--font-sans); font-size: var(--fs-eyebrow); color: var(--krew-cobre); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
-.rnode h3 { font-size: var(--fs-h3); font-weight: 700; color: var(--fg-on-dark); line-height: 1.2; margin-bottom: 14px; }
-.rnode p { font-size: var(--fs-body-sm); line-height: 1.65; color: var(--fg-on-dark-2); margin-bottom: 16px; }
-.rnode .rb { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-eyebrow); font-weight: 700; text-transform: uppercase; letter-spacing: var(--ls-eyebrow); padding: 4px 12px 4px 10px; background: var(--accent); color: var(--krew-caliche); border-radius: var(--radius-pill); margin-bottom: 14px; }
-.rnode .rb::before { content: ""; width: 6px; height: 6px; background: var(--krew-caliche); border-radius: 50%; }
-.rnode .note { font-size: 12px; color: var(--krew-cobre); line-height: 1.55; padding-top: 14px; border-top: 1px solid rgba(244,237,224,0.15); font-style: italic; }
-
-.cta-section { text-align: center; }
-.cta-section .h-cta { max-width: 760px; margin: 0 auto; }
-.cta-section .lead { margin: 24px auto 0; max-width: 660px; }
-.cta-buttons { margin-top: 40px; display: flex; justify-content: center; gap: 12px; }
-.form { margin: 56px auto 0; max-width: 520px; text-align: left; border-top: 1px solid var(--divider); padding-top: 48px; }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
-.form-row { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
-.form-row label { font-family: var(--font-sans); font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.10em; font-weight: 700; }
-.form-row input, .form-row textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--bg-elevated); font-family: var(--font-sans); font-size: 15px; color: var(--fg-1); transition: border-color var(--dur-fast), box-shadow var(--dur-fast); }
-.form-row textarea { resize: vertical; min-height: 80px; }
-.form-row input::placeholder, .form-row textarea::placeholder { color: var(--fg-3); }
-.form-row input:focus, .form-row textarea:focus { outline: 0; border-color: var(--accent); box-shadow: var(--shadow-focus); }
-.form-submit { width: 100%; padding: 14px; background: var(--accent); color: var(--krew-caliche); font-size: 15px; font-weight: 600; border-radius: var(--radius-sm); margin-top: 8px; transition: background var(--dur-fast); letter-spacing: 0.01em; cursor: pointer; border: 0; font-family: var(--font-sans); }
-.form-submit:hover { background: var(--accent-hover); }
-.form-success { text-align: center; padding: 48px 28px; border: 1px solid var(--border); background: var(--surface-card); border-radius: var(--radius-lg); margin-top: 24px; }
-
-footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(--bg); }
-.footer-inner { display: grid; grid-template-columns: 1fr 2fr 1fr; align-items: center; gap: 24px; }
-@media (max-width: 720px) { .footer-inner { grid-template-columns: 1fr; text-align: left; gap: 16px; } }
-.footer-center { text-align: center; font-family: var(--font-mono); font-size: 13px; color: var(--fg-2); display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; }
-.footer-center a { color: var(--fg-1); }
-.footer-center a:hover { color: var(--accent); text-decoration: underline; }
-.footer-right { text-align: right; font-family: var(--font-mono); font-size: 12px; color: var(--fg-2); }
-@media (max-width: 720px) { .footer-right { text-align: left; } }
-
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
-.reveal.in { opacity: 1; transform: none; }
-.cobre-divider { height: 6px; background: var(--accent); width: 100%; }
-
-/* Hero modules */
-.hero-modules { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; }
-@media (max-width: 720px) { .hero-modules { grid-template-columns: 1fr; } }
-.hmod { text-align: left; padding: 28px; display: flex; flex-direction: column; border-top: 3px solid var(--stage, var(--accent)); transition: background var(--dur-base) var(--ease-std); }
-.hmod:hover { background: var(--krew-cobre-10); }
-.hmod-1 { --stage: #7A3E1A; } .hmod-2 { --stage: #D4622A; } .hmod-3 { --stage: #B07B3F; }
-.hmod-arrow { display: flex; align-items: center; justify-content: center; color: var(--accent); padding: 0 8px; }
-@media (max-width: 720px) { .hmod { border-top-width: 3px; border-bottom: 1px solid var(--divider); } .hmod-arrow { padding: 16px 0; transform: rotate(90deg); } }
-.hmod-num { font-size: 14px; font-weight: 600; color: var(--stage, var(--accent)); margin-bottom: 14px; }
-.hmod-name { font-family: var(--font-sans); font-weight: 700; font-size: 19px; color: var(--fg-1); letter-spacing: 0.01em; margin-bottom: 8px; }
-.hmod-desc { font-size: 13px; color: var(--fg-2); line-height: 1.5; }
-
-/* Grid 2x2 overrides */
-.pcards.grid-2x2 { grid-template-columns: 1fr 1fr; }
-.audience-cards.grid-2x2 { grid-template-columns: 1fr 1fr; }
-@media (max-width: 880px) { .pcards.grid-2x2 { grid-template-columns: 1fr; } .audience-cards.grid-2x2 { grid-template-columns: 1fr; } }
-
-/* Modules section */
-.modules-section { background: var(--bg-elevated); }
-.modules-flow { margin-top: 64px; display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: stretch; }
-@media (max-width: 880px) { .modules-flow { grid-template-columns: 1fr; } .mflow-arrow { padding: 14px 0; transform: rotate(90deg); } }
-.mcard { background: var(--surface-card); border: 1px solid var(--border); border-top: 3px solid var(--accent); border-radius: var(--radius-lg); padding: 32px 28px; display: flex; flex-direction: column; }
-.mcard .mc-eyebrow { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 14px; }
-.mcard h3 { font-family: var(--font-sans); font-weight: 700; font-size: 19px; letter-spacing: 0.02em; margin-bottom: 14px; color: var(--fg-1); }
-.mcard p { font-size: var(--fs-body); color: var(--fg-2); line-height: var(--lh-body); margin-bottom: 20px; }
-.mcard .mc-foot { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--divider); font-family: var(--font-mono); font-size: 11px; color: var(--krew-cobre-suave); line-height: 1.5; }
-.mflow-arrow { display: flex; align-items: center; justify-content: center; color: var(--accent); padding: 0 18px; }
-.modules-note { margin: 48px auto 0; max-width: 760px; text-align: center; font-size: var(--fs-body); line-height: var(--lh-body); color: var(--fg-2); text-wrap: pretty; }
-.modules-note strong { color: var(--fg-1); font-weight: 700; }
-
-/* Live dot */
-.live-dot { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: var(--krew-rojo-critico); letter-spacing: 0.08em; }
-.live-dot::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--krew-rojo-critico); }
+  .cobre-divider { height: 6px; background: var(--accent); width: 100%; }
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity 600ms var(--ease-out), transform 600ms var(--ease-out); }
+  .reveal.in { opacity: 1; transform: none; }
 </style>
 </head>
 <body>
@@ -406,13 +285,13 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 <header class="nav">
   <div class="container nav-inner">
     <a href="#top" class="k-lockup" aria-label="KREW · Compliance Operacional">
-      <span class="k-badge" style="width:32px;height:32px;">
-        <span class="k" style="font-size:20px;transform:translateY(-2px);">K</span>
+      <span class="k-badge" style="width: 32px; height: 32px;">
+        <span class="k" style="font-size: 20px; transform: translateY(-2px);">K</span>
         <span class="bar"></span>
       </span>
       <span class="k-lockup-text">
-        <span class="word" style="font-size:18px;">KREW</span>
-        <span class="tag" style="font-size:8px;">Compliance Operacional</span>
+        <span class="word" style="font-size: 18px;">KREW</span>
+        <span class="tag" style="font-size: 8px;">Compliance Operacional</span>
       </span>
     </a>
     <nav class="nav-links">
@@ -428,32 +307,11 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 <section class="hero" id="top">
   <div class="container">
     <span class="eyebrow-badge">Plataforma AI-native para compliance operacional</span>
-    <h1 class="h-hero">El sistema operativo para contratistas mineros.</h1>
-    <p class="hero-sub">Krew gestiona la acreditación, los permisos de trabajo, la coordinación de terreno y la inteligencia operacional de tu empresa — en una sola plataforma, para todas las faenas donde operas.</p>
+    <h1 class="h-hero">La acreditación de contratistas mineros, reinventada.</h1>
+    <p class="hero-sub">Krew reemplaza la manualidad del Excel, carpetas compartidas, coordinaciones y consultores con una plataforma AI-native, que gestiona cada documento, cada trabajador y cada activo, en una sola plataforma, para todas las faenas donde operas.</p>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#contacto">Solicitar piloto <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></a>
       <a class="btn btn-ghost" href="#como-funciona">Ver cómo funciona <i data-lucide="arrow-down" style="width:16px;height:16px;"></i></a>
-    </div>
-    <div class="hero-strip">
-      <div class="hero-modules">
-        <a class="hmod hmod-1" href="#producto">
-          <div class="hmod-num mono">01</div>
-          <div class="hmod-name">Accreditation</div>
-          <div class="hmod-desc">Cada trabajador y activo acreditado en tiempo real, en todas tus faenas.</div>
-        </a>
-        <div class="hmod-arrow" aria-hidden="true"><i data-lucide="arrow-right" style="width:34px;height:34px;"></i></div>
-        <a class="hmod hmod-2" href="#producto">
-          <div class="hmod-num mono">02</div>
-          <div class="hmod-name">Execution</div>
-          <div class="hmod-desc">Permisos de trabajo, cuadrillas y registro de terreno — todo evidenciado.</div>
-        </a>
-        <div class="hmod-arrow" aria-hidden="true"><i data-lucide="arrow-right" style="width:34px;height:34px;"></i></div>
-        <a class="hmod hmod-3" href="#producto">
-          <div class="hmod-num mono">03</div>
-          <div class="hmod-name">Intelligence</div>
-          <div class="hmod-desc">Score de riesgo, predicción de cobro y benchmarks entre contratistas.</div>
-        </a>
-      </div>
     </div>
   </div>
 </section>
@@ -461,31 +319,31 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 <!-- EL PROBLEMA -->
 <section class="section--elevated">
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head">
       <span class="eyebrow">El problema</span>
-      <h2 class="h-section">Gestionar el cumplimiento de tus trabajadores no debería ser tan complejo.</h2>
-      <p>Un contratista con 200 trabajadores administra más de 3.000 documentos activos al mismo tiempo — en múltiples minas, cada una con sus propios requisitos. Revisar qué vence, perseguir actualizaciones y demostrar cumplimiento no debería tomar tanto tiempo.</p>
+      <h2 class="h-section">Gestionar la acreditación de tus trabajadores no debería ser tan complejo.</h2>
+      <p>Un contratista con 200 trabajadores administra más de 6.000 documentos activos al mismo tiempo — licencias, EPP, cursos, exámenes médicos, permisos de equipos — cada uno con su propia fecha de vencimiento y sus propios requisitos por faena.</p>
     </div>
-    <div class="pcards grid-2x2">
-      <div class="pcard reveal">
-        <div class="pcard-ico"><i data-lucide="shield-alert" style="width:20px;height:20px;"></i></div>
+    <div class="pcards">
+      <div class="pcard">
+        <div class="pcard-ico"><i data-lucide="clock" style="width: 20px; height: 20px;"></i></div>
+        <h3>Equipos enteros consumidos en gestión documental</h3>
+        <p>RRHH, HSE, admins de contrato y consultores dedicando horas a recopilar, cargar y perseguir documentos. Procesos duplicados en multiples minas que incrementan el gasto en personal</p>
+      </div>
+      <div class="pcard">
+        <div class="pcard-ico"><i data-lucide="shield-alert" style="width: 20px; height: 20px;"></i></div>
         <h3>Trabajadores bloqueados en portería</h3>
-        <p>Un documento vencido detiene el ingreso. Si no tienes visibilidad sobre lo que vence la próxima semana, te enteras en el momento equivocado — cuando el trabajador ya está en la faena y la mina lo rechaza.</p>
+        <p>Un documento vencido detiene el ingreso. Te enteras cuando el trabajador ya está en la faena y la mina lo rechaza</p>
       </div>
-      <div class="pcard reveal">
-        <div class="pcard-ico"><i data-lucide="receipt" style="width:20px;height:20px;"></i></div>
-        <h3>Pagos retrasados por documentación incompleta</h3>
-        <p>La mina no paga hasta que la documentación de todos los trabajadores esté completa y validada. Con procesos manuales, ese ciclo se extiende semanas más de lo necesario — y el contratista financia la diferencia.</p>
+      <div class="pcard">
+        <div class="pcard-ico"><i data-lucide="receipt" style="width: 20px; height: 20px;"></i></div>
+        <h3>Pagos retrasados y descuentos que no puedes refutar</h3>
+        <p>La mina no paga y/o descuenta las facturas hasta que todo esté validado. Con procesos manuales, el ciclo se extiende semanas. Sin registro de terreno, no es posible probar el cumplimiento</p>
       </div>
-      <div class="pcard reveal">
-        <div class="pcard-ico"><i data-lucide="file-x" style="width:20px;height:20px;"></i></div>
-        <h3>Descuentos en boleta que no puedes refutar</h3>
-        <p>Sin registro de terreno, no hay evidencia para disputar un descuento. Si el trabajo se hizo pero no quedó documentado en el momento, la mina gana el argumento por default.</p>
-      </div>
-      <div class="pcard reveal">
-        <div class="pcard-ico"><i data-lucide="file-search" style="width:20px;height:20px;"></i></div>
+      <div class="pcard">
+        <div class="pcard-ico"><i data-lucide="file-search" style="width: 20px; height: 20px;"></i></div>
         <h3>Cumplimiento regulatorio sin evidencia</h3>
-        <p>Las regulaciones vigentes exigen trazabilidad documental real, no carpetas compartidas. Demostrar cumplimiento en una fiscalización requiere hoy horas de búsqueda manual — si es que la evidencia existe.</p>
+        <p>Las regulaciones vigentes exigen trazabilidad documental real: Ley 16.744, Ley 20.123, DS44. Demostrar cumplimiento en una fiscalización requiere horas de búsqueda manual — si es que la evidencia existe</p>
       </div>
     </div>
   </div>
@@ -494,31 +352,30 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 <!-- LA SOLUCIÓN -->
 <section>
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head">
       <span class="eyebrow">La solución</span>
-      <h2 class="h-section">Krew centraliza, automatiza y te da visibilidad sobre todo — antes de que los problemas lleguen a ti.</h2>
-      <p>Krew es una plataforma AI-native construida específicamente para el ecosistema contratista minero. No es un repositorio de archivos ni una planilla mejorada: es un sistema que entiende qué documentos necesita cada trabajador, en qué faena y con qué vigencia — y actúa en consecuencia.</p>
+      <h2 class="h-section">Krew registra cada acción, cada documento y cada autorización — para que tengas evidencia cuando la necesites.</h2>
     </div>
     <div class="caps">
-      <div class="cap reveal">
-        <div class="cap-num">01 / Ingesta</div>
-        <h3>Clasificación automática con AI</h3>
-        <p>Sube un documento — Krew lo lee, extrae la información relevante, lo clasifica y lo vincula al trabajador o activo correcto. Sin carga manual, sin errores de tipeo, sin carpetas mal nombradas.</p>
+      <div class="cap">
+        <div class="cap-num">01 · Ingesta</div>
+        <h3>Ingesta y clasificación automática con AI</h3>
+        <p>Sube un documento — Krew lo lee, extrae los datos relevantes, lo clasifica y lo vincula al trabajador o activo correcto. Sin carga manual, sin errores de tipeo.</p>
       </div>
-      <div class="cap reveal">
-        <div class="cap-num">02 / Alertas</div>
+      <div class="cap">
+        <div class="cap-num">02 · Comunicación e integración</div>
+        <h3>El canal donde el trabajador ya está, conectado a todos tus sistemas</h3>
+        <p>Comunicación por WhatsApp y Krew App para reunir documentos y confirmar renovaciones. Integración con portales de las minas, centros de salud, ERP y softwares de RRHH — sin doble carga.</p>
+      </div>
+      <div class="cap">
+        <div class="cap-num">03 · Visibilidad</div>
+        <h3>Estado en tiempo real por persona, activo y faena</h3>
+        <p>Un solo dashboard muestra quién está acreditado, quién tiene documentos pendientes y qué vence esta semana — sin tener que llamar a nadie ni abrir carpetas.</p>
+      </div>
+      <div class="cap">
+        <div class="cap-num">04 · Alertas</div>
         <h3>Antes de que venza, no después</h3>
-        <p>El sistema monitorea cada certificación activa y alerta al trabajador, al área de RRHH y al administrador de contratos 30, 15 y 7 días antes del vencimiento. La acción correctiva ocurre antes del problema.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="cap-num">03 / Terreno</div>
-        <h3>Registro inmutable de cada acción en faena</h3>
-        <p>Permisos de trabajo digitales, firma del supervisor, fotos de condiciones, checklists. Cada acción queda documentada con timestamp en el momento en que ocurre — evidencia lista para cualquier disputa.</p>
-      </div>
-      <div class="cap reveal">
-        <div class="cap-num">04 / Audit trail</div>
-        <h3>Registro inmutable para auditorías y fiscalizaciones</h3>
-        <p>Cada aprobación, rechazo y cambio de estado queda registrado con timestamp y responsable. En caso de fiscalización, el paquete de evidencia está disponible en minutos.</p>
+        <p>Krew monitorea cada certificación activa y alerta al trabajador, al área de RRHH y al administrador de contratos 30, 15 y 7 días antes del vencimiento.</p>
       </div>
     </div>
   </div>
@@ -526,36 +383,29 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 
 <div class="cobre-divider" aria-hidden="true"></div>
 
-<!-- EL PRODUCTO -->
+<!-- PRODUCTO -->
 <section class="section--elevated" id="producto">
   <div class="container">
-    <div class="section-head reveal">
+    <div class="product-head">
       <span class="eyebrow">Producto</span>
-      <h2 class="h-section">Tres fases que se construyen sobre el mismo dato.</h2>
+      <h2 class="h-section">Cómo funciona Krew.</h2>
     </div>
-
-    <div class="product-tabs" role="tablist">
-      <button class="product-tab active" data-tab="t1" role="tab"><span class="num">01</span>Accreditation</button>
-      <button class="product-tab" data-tab="t2" role="tab"><span class="num">02</span>Execution</button>
-      <button class="product-tab" data-tab="t3" role="tab"><span class="num">03</span>Intelligence</button>
-    </div>
-
-    <!-- TAB 1 -->
-    <div class="product-panel active" id="t1" role="tabpanel">
+    <div class="product-panel" id="como-funciona">
       <div>
         <span class="badge-live">Disponible hoy</span>
-        <h3>Reemplaza el trabajo de las personas que hoy persiguen documentos a mano.</h3>
-        <p class="panel-sub">El núcleo operativo de Krew: cada documento, cada trabajador y cada activo de tu dotación, gestionado por un sistema que entiende lo que está leyendo.</p>
+        <h3>Optimiza el trabajo de tu equipo que hoy persigue documentos a mano.</h3>
+        <p class="panel-sub">Cada documento, cada trabajador y cada activo de tu dotación, gestionado por un sistema que entiende lo que está leyendo.</p>
         <ul class="feat-list">
-          <li><span class="ico"><i data-lucide="check"></i></span>AI extrae, clasifica y valida documentos automáticamente</li>
-          <li><span class="ico"><i data-lucide="check"></i></span>Alertas 30, 15 y 7 días antes del vencimiento al trabajador y al contratista</li>
-          <li><span class="ico"><i data-lucide="check"></i></span>Estado en tiempo real por persona, por activo, por mina</li>
-          <li><span class="ico"><i data-lucide="check"></i></span>Audit trail completo para cada fiscalización</li>
-          <li><span class="ico"><i data-lucide="check"></i></span>Cubre trabajadores y activos: cada equipo, vehículo o maquinaria tiene su propio stack documental</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Clasificación automática con AI: sube un documento y Krew lo lee, lo clasifica y lo vincula al trabajador o activo correcto — sin carga manual</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Alertas antes del vencimiento: 30, 15 y 7 días antes, al trabajador y al administrador de contratos</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Krew coordina cada documento, mensaje y paso de la acreditación: la mina, los exámenes, la OTEC y el aprobador correcto, todo de forma automática</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Integración con portales de mandantes: Krew sube y actualiza la documentación directamente en la plataforma de cada mina, sin doble carga</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Comunicación por WhatsApp: el canal donde el trabajador ya está, para reunir documentos y confirmar renovaciones</li>
+          <li><span class="ico"><i data-lucide="check"></i></span>Audit trail inmutable: evidencia de cumplimiento lista en minutos ante cualquier fiscalización</li>
         </ul>
         <div class="sub-passport-block">
-          <div class="lbl">Krew Passport</div>
-          <p>El trabajador lleva su acreditación en el celular. QR de acceso diario generado automáticamente, válido 24 horas y bloqueado si hay un documento vencido. Multi-mina: el mismo trabajador acreditado en varias faenas simultáneamente. Funciona sin conexión a internet — crítico en zonas remotas.</p>
+          <div class="lbl">Krew App</div>
+          <p>El trabajador lleva su acreditación en el celular, con QR de acceso diario generado automáticamente — válido 24 horas y bloqueado si hay un documento vencido.</p>
         </div>
       </div>
       <div class="phone-wrap">
@@ -565,14 +415,15 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
             <div class="pp-header">
               <div class="brand">
                 <span class="badge"><span class="k">K</span><span class="bar"></span></span>
-                <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1;">
-                  <span class="word">KREW</span><span class="tag" style="margin-top:2px;">Passport</span>
+                <div style="display: flex; flex-direction: column; align-items: flex-start; line-height: 1;">
+                  <span class="word">KREW</span>
+                  <span class="tag" style="margin-top: 2px;">App</span>
                 </div>
               </div>
             </div>
             <div class="pp-body">
               <div class="pp-name">Carlos Herrera M.</div>
-              <div class="pp-meta">Supervisor · Turno A<br><span class="mono">RUT 14.892.341-K</span><br>Faena: Los Bronces</div>
+              <div class="pp-meta">Supervisor · Turno A<br/><span class="mono">RUT 14.892.341-K</span><br/>Faena: Cerro Alto</div>
               <div class="pp-section-lbl">Certificaciones</div>
               <div class="pp-cert green"><span class="pp-cert-ico"><i data-lucide="check-circle"></i></span><div><div class="pp-cert-title">ACHS — Curso Alturas</div><div class="pp-cert-sub">Vence 03 mar 2027</div></div></div>
               <div class="pp-cert green"><span class="pp-cert-ico"><i data-lucide="check-circle"></i></span><div><div class="pp-cert-title">Sence — Op. Cargador Frontal</div><div class="pp-cert-sub">Vence 11 nov 2026</div></div></div>
@@ -617,91 +468,19 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
         </div>
       </div>
     </div>
-
-    <!-- TAB 2 -->
-    <div class="product-panel" id="t2" role="tabpanel">
-      <div>
-        <span class="badge-live">Disponible hoy</span>
-        <h3>El puente entre acreditación y trabajo real en terreno.</h3>
-        <p class="panel-sub">Una vez que el trabajador está acreditado, Krew coordina la operación sobre los mismos datos — sin duplicar sistemas ni reentrar información.</p>
-        <ul class="feat-list">
-          <li><span class="ico"><i data-lucide="check"></i></span>Permiso de trabajo digital con firma móvil del supervisor</li>
-          <li><span class="ico"><i data-lucide="check"></i></span>Registro inmutable con timestamp de inicio y cierre</li>
-          <li><span class="ico"><i data-lucide="check"></i></span>Fotos de condiciones pre y post trabajo, checklists dinámicos por tipo de tarea</li>
-          <li><span class="ico"><i data-lucide="check"></i></span>Asignación de cuadrillas vinculada al estado documental</li>
-          <li><span class="ico"><i data-lucide="check"></i></span>Coordinación entre contratista y mandante en una sola plataforma</li>
-        </ul>
-      </div>
-      <div>
-        <div class="mockup-frame" style="padding:36px;min-height:420px;display:flex;flex-direction:column;gap:18px;">
-          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.10em;color:var(--accent);text-transform:uppercase;font-weight:600;">Vista previa · Execution</div>
-          <div style="font-family:var(--font-sans);font-weight:700;font-size:22px;letter-spacing:-0.005em;">Órdenes de trabajo · Faena Los Bronces</div>
-          <div style="border-top:1px solid var(--divider);padding-top:12px;">
-            <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--divider);">
-              <div style="font-family:var(--font-mono);font-size:12px;color:var(--krew-cobre-suave);width:60px;">OT-1042</div>
-              <div style="flex:1;"><div style="font-weight:600;font-size:14px;color:var(--fg-1);">Mantención correa transportadora</div><div style="font-size:12px;color:var(--fg-2);margin-top:2px;">Cuadrilla A · 4 trabajadores</div></div>
-              <span class="pill green"><span class="dot"></span>Habilitado</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--divider);">
-              <div style="font-family:var(--font-mono);font-size:12px;color:var(--krew-cobre-suave);width:60px;">OT-1043</div>
-              <div style="flex:1;"><div style="font-weight:600;font-size:14px;color:var(--fg-1);">Inspección eléctrica subestación</div><div style="font-size:12px;color:var(--fg-2);margin-top:2px;">Cuadrilla B · 2 trabajadores</div></div>
-              <span class="pill yellow"><span class="dot"></span>Revisar</span>
-            </div>
-            <div style="display:flex;align-items:center;gap:16px;padding:12px 0;">
-              <div style="font-family:var(--font-mono);font-size:12px;color:var(--krew-cobre-suave);width:60px;">OT-1044</div>
-              <div style="flex:1;"><div style="font-weight:600;font-size:14px;color:var(--fg-1);">Soldadura cañería sector 7</div><div style="font-size:12px;color:var(--fg-2);margin-top:2px;">Cuadrilla C · 3 trabajadores</div></div>
-              <span class="pill red"><span class="dot"></span>Bloqueado</span>
-            </div>
-          </div>
-          <div style="margin-top:auto;padding-top:14px;border-top:1px solid var(--divider);display:flex;align-items:center;justify-content:space-between;">
-            <span style="font-family:var(--font-mono);font-size:11px;color:var(--krew-cobre-suave);line-height:1.5;">Sin estado documental vigente, la OT no se autoriza.</span>
-            <span class="live-dot">EN VIVO</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 3 -->
-    <div class="product-panel" id="t3" role="tabpanel">
-      <div>
-        <span class="badge-soon">En desarrollo</span>
-        <h3>Los datos estructurados de acreditación y ejecución generan inteligencia que ningún proceso manual puede producir.</h3>
-        <p class="panel-sub">Cuando cada documento, OT y trabajador queda registrado en un sistema, los patrones emergen — y la decisión deja de basarse en intuición.</p>
-        <ul class="feat-list">
-          <li><span class="arr">→</span>Score predictivo de riesgo por contratista, basado en historial documental real</li>
-          <li><span class="arr">→</span>Paquetes de auditoría generados automáticamente</li>
-          <li><span class="arr">→</span>Autorización de pago vinculada al estado de compliance</li>
-          <li><span class="arr">→</span>Benchmarks entre contratistas para que la mina tome decisiones con datos</li>
-        </ul>
-      </div>
-      <div>
-        <div class="mockup-frame" style="padding:36px;min-height:420px;">
-          <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.10em;color:var(--accent);text-transform:uppercase;font-weight:600;margin-bottom:14px;">Vista previa · Intelligence</div>
-          <div style="font-family:var(--font-sans);font-weight:700;font-size:22px;letter-spacing:-0.005em;margin-bottom:28px;">Risk Score por contratista</div>
-          <div style="display:flex;flex-direction:column;gap:16px;">
-            <div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;"><span style="font-size:14px;font-weight:600;color:var(--fg-1);">Enaex S.A.</span><span class="mono" style="font-size:14px;color:var(--krew-verde-activo);font-weight:600;">82 · LOW</span></div><div style="height:8px;background:var(--divider);border-radius:3px;overflow:hidden;"><div style="width:82%;height:100%;background:var(--krew-verde-activo);"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;"><span style="font-size:14px;font-weight:600;color:var(--fg-1);">Besalco</span><span class="mono" style="font-size:14px;color:var(--krew-verde-activo);font-weight:600;">76 · LOW</span></div><div style="height:8px;background:var(--divider);border-radius:3px;overflow:hidden;"><div style="width:76%;height:100%;background:var(--krew-verde-activo);"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;"><span style="font-size:14px;font-weight:600;color:var(--fg-1);">Sigdo Koppers</span><span class="mono" style="font-size:14px;color:var(--krew-ambar-alerta);font-weight:600;">54 · MED</span></div><div style="height:8px;background:var(--divider);border-radius:3px;overflow:hidden;"><div style="width:54%;height:100%;background:var(--krew-ambar-alerta);"></div></div></div>
-            <div><div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;"><span style="font-size:14px;font-weight:600;color:var(--fg-1);">Metso Chile</span><span class="mono" style="font-size:14px;color:var(--krew-rojo-critico);font-weight:600;">31 · HIGH</span></div><div style="height:8px;background:var(--divider);border-radius:3px;overflow:hidden;"><div style="width:31%;height:100%;background:var(--krew-rojo-critico);"></div></div></div>
-          </div>
-          <div style="margin-top:28px;padding-top:16px;border-top:1px solid var(--divider);font-family:var(--font-mono);font-size:11px;color:var(--krew-cobre-suave);line-height:1.6;">Score basado en 14 meses de historial: vencimientos, rechazos, tiempos de respuesta.</div>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
 <!-- LA PLATAFORMA -->
 <section>
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head">
       <span class="eyebrow">La plataforma</span>
       <h2 class="h-section">Diseñada para operar en faena, no solo en oficina.</h2>
-      <p>Krew tiene tres vistas que trabajan sincronizadas: el dashboard del contratista, el Krew Passport del trabajador en su celular, y el panel de visibilidad del mandante.</p>
+      <p>Krew tiene dos vistas que trabajan sincronizadas: el dashboard del contratista y la Krew App del trabajador en su celular.</p>
     </div>
 
-    <!-- Dashboard del contratista -->
-    <div class="mockup-block reverse reveal">
+    <div class="mockup-block reverse">
       <div class="mockup-info">
         <div class="lbl">01 · Dashboard del contratista</div>
         <h3>Vista central: trabajadores activos, porcentaje de acreditación, alertas por vencer, estado por faena.</h3>
@@ -710,8 +489,14 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
       </div>
       <div class="mockup-frame">
         <div class="dash-bar">
-          <div class="dash-bar-left"><span class="tag mono">Contratista</span><span class="title">Dashboard · ServiMin Ltda</span></div>
-          <div class="dash-bar-right"><span class="dash-chip mono">Todas las faenas</span><span class="dash-chip mono active">Activos</span></div>
+          <div class="dash-bar-left">
+            <span class="tag mono">Contratista</span>
+            <span class="title">Dashboard · Traxion Ltda</span>
+          </div>
+          <div class="dash-bar-right">
+            <span class="dash-chip mono">Todas las faenas</span>
+            <span class="dash-chip mono active">Activos</span>
+          </div>
         </div>
         <div class="dash-stats">
           <div class="dash-stat"><div class="lbl">Activos</div><div class="num mono">187</div></div>
@@ -722,18 +507,17 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
         <table class="dash-table">
           <thead><tr><th>Trabajador</th><th>Estado</th><th>Próx. vencimiento</th><th>Faena</th></tr></thead>
           <tbody>
-            <tr><td class="name">Carlos Herrera M.</td><td><span class="pill green"><span class="dot"></span>Completo</span></td><td class="mono" style="color:var(--fg-2);">03 mar 2027</td><td style="color:var(--fg-2);">Los Bronces</td></tr>
-            <tr><td class="name">Ana Soto V.</td><td><span class="pill green"><span class="dot"></span>Completo</span></td><td class="mono" style="color:var(--fg-2);">11 nov 2026</td><td style="color:var(--fg-2);">Los Bronces</td></tr>
-            <tr><td class="name">Luis Mora P.</td><td><span class="pill yellow"><span class="dot"></span>Pendiente · 14d</span></td><td class="mono" style="color:var(--krew-ambar-alerta);">— · vence pronto</td><td style="color:var(--fg-2);">Collahuasi</td></tr>
-            <tr><td class="name">Pedro Contreras F.</td><td><span class="pill red"><span class="dot"></span>Vencido</span></td><td class="mono" style="color:var(--krew-rojo-critico);">Vencido</td><td style="color:var(--fg-2);">Centinela</td></tr>
-            <tr><td class="name">María Pizarro S.</td><td><span class="pill green"><span class="dot"></span>Completo</span></td><td class="mono" style="color:var(--fg-2);">24 ago 2026</td><td style="color:var(--fg-2);">Los Bronces</td></tr>
+            <tr><td class="name">Carlos Herrera M.</td><td><span class="pill green"><span class="dot"></span>Completo</span></td><td class="mono" style="color: var(--fg-2);">03 mar 2027</td><td style="color: var(--fg-2);">Cerro Alto</td></tr>
+            <tr><td class="name">Ana Soto V.</td><td><span class="pill green"><span class="dot"></span>Completo</span></td><td class="mono" style="color: var(--fg-2);">11 nov 2026</td><td style="color: var(--fg-2);">Cerro Alto</td></tr>
+            <tr><td class="name">Luis Mora P.</td><td><span class="pill yellow"><span class="dot"></span>Pendiente · 14d</span></td><td class="mono" style="color: var(--krew-ambar-alerta);">— · vence pronto</td><td style="color: var(--fg-2);">Valle Norte</td></tr>
+            <tr><td class="name">Pedro Contreras F.</td><td><span class="pill red"><span class="dot"></span>Vencido</span></td><td class="mono" style="color: var(--krew-rojo-critico);">Vencido</td><td style="color: var(--fg-2);">Quebrada Sur</td></tr>
+            <tr><td class="name">María Pizarro S.</td><td><span class="pill green"><span class="dot"></span>Completo</span></td><td class="mono" style="color: var(--fg-2);">24 ago 2026</td><td style="color: var(--fg-2);">Cerro Alto</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- Krew Passport móvil -->
-    <div class="mockup-block with-phone reverse reveal">
+    <div class="mockup-block with-phone reverse">
       <div class="phone-wrap">
         <div class="phone">
           <div class="phone-notch"></div>
@@ -741,90 +525,60 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
             <div class="pp-header">
               <div class="brand">
                 <span class="badge"><span class="k">K</span><span class="bar"></span></span>
-                <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1;">
-                  <span class="word">KREW</span><span class="tag" style="margin-top:2px;">Passport</span>
+                <div style="display: flex; flex-direction: column; align-items: flex-start; line-height: 1;">
+                  <span class="word">KREW</span><span class="tag" style="margin-top: 2px;">App</span>
                 </div>
               </div>
             </div>
             <div class="pp-body">
               <div class="pp-name">Carlos Herrera M.</div>
-              <div class="pp-meta">Supervisor · Turno A<br><span class="mono">RUT 14.892.341-K</span><br>Faena: Los Bronces</div>
+              <div class="pp-meta">Supervisor · Turno A<br/><span class="mono">RUT 14.892.341-K</span><br/>Faena: Cerro Alto</div>
               <div class="pp-section-lbl">Certificaciones</div>
               <div class="pp-cert green"><span class="pp-cert-ico"><i data-lucide="check-circle"></i></span><div><div class="pp-cert-title">ACHS — Curso Alturas</div><div class="pp-cert-sub">Vence 03 mar 2027</div></div></div>
               <div class="pp-cert green"><span class="pp-cert-ico"><i data-lucide="check-circle"></i></span><div><div class="pp-cert-title">Inducción Minera General</div><div class="pp-cert-sub">Vence 24 ago 2026</div></div></div>
               <div class="pp-cert yellow"><span class="pp-cert-ico"><i data-lucide="alert-triangle"></i></span><div><div class="pp-cert-title">Licencia D</div><div class="pp-cert-sub">Vence en 14 días</div></div></div>
-              <div class="pp-footer" style="margin-top:16px;">Escanear en portería · Válido hasta 23:59 hoy</div>
+              <div class="pp-footer" style="margin-top: 16px;">Escanear en portería · Válido hasta 23:59 hoy</div>
             </div>
           </div>
         </div>
       </div>
       <div class="mockup-info">
-        <div class="lbl">02 · Krew Passport — móvil</div>
-        <h3>Tarjeta digital del trabajador con QR de acceso diario y estado de certificaciones.</h3>
-        <p>El mismo trabajador, en varias faenas. QR generado y bloqueado por el sistema, no por una persona. Funciona offline.</p>
-        <div class="meta">iOS · Android · offline first</div>
-      </div>
-    </div>
-
-    <!-- Panel del mandante -->
-    <div class="mockup-block reveal">
-      <div class="mockup-info">
-        <div class="lbl">03 · Panel del mandante</div>
-        <h3>Vista consolidada de todos los contratistas que operan en la faena, con compliance % por empresa.</h3>
-        <p>El área de acreditación de la mina deja de validar documentos uno por uno — y empieza a actuar sobre excepciones.</p>
-        <div class="meta">vista mandante · cross-contractor</div>
-      </div>
-      <div class="mockup-frame">
-        <div class="dash-bar">
-          <div class="dash-bar-left"><span class="tag mono">Mandante</span><span class="title">Faena Los Bronces · 12 contratistas</span></div>
-          <div class="dash-bar-right"><span class="dash-chip mono">Riesgo</span><span class="dash-chip mono active">Todos</span></div>
-        </div>
-        <div class="dash-stats">
-          <div class="dash-stat"><div class="lbl">Compliance global</div><div class="num mono green">94.2%</div></div>
-          <div class="dash-stat"><div class="lbl">En riesgo</div><div class="num mono red">3</div></div>
-          <div class="dash-stat"><div class="lbl">Vencen en 7d</div><div class="num mono yellow">18</div></div>
-          <div class="dash-stat"><div class="lbl">Trabajadores</div><div class="num mono">2.847</div></div>
-        </div>
-        <table class="dash-table">
-          <thead><tr><th>Contratista</th><th>Trabajadores</th><th>Compliance</th><th>Riesgo</th><th>Acción</th></tr></thead>
-          <tbody>
-            <tr><td class="name">Enaex S.A.</td><td class="mono" style="color:var(--fg-2);">187</td><td class="mono" style="color:var(--krew-ambar-alerta);font-weight:600;">75.9%</td><td><span class="risk med">Medio</span></td><td style="color:var(--fg-2);font-size:13px;">Revisar 31 pendientes</td></tr>
-            <tr><td class="name">Besalco</td><td class="mono" style="color:var(--fg-2);">312</td><td class="mono" style="color:var(--krew-verde-activo);font-weight:600;">91.2%</td><td><span class="risk low">Bajo</span></td><td style="color:var(--fg-2);font-size:13px;">Monitoreo estándar</td></tr>
-            <tr><td class="name">Metso Chile</td><td class="mono" style="color:var(--fg-2);">44</td><td class="mono" style="color:var(--krew-rojo-critico);font-weight:600;">61.4%</td><td><span class="risk high">Alto</span></td><td style="color:var(--krew-rojo-critico);font-size:13px;font-weight:600;">Bloquear acceso</td></tr>
-          </tbody>
-        </table>
+        <div class="lbl">02 · Krew App — móvil</div>
+        <h3>Tarjeta digital del trabajador con estado actualizado de todos sus documentos.</h3>
+        <p>El mismo trabajador, en varias faenas. Generado automáticamente por el sistema, no por una persona.</p>
+        <div class="meta">iOS · Android</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CÓMO FUNCIONA -->
-<section class="section--elevated" id="como-funciona">
+<!-- EL FLUJO -->
+<section class="section--elevated">
   <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Cómo funciona</span>
+    <div class="section-head">
+      <span class="eyebrow">El flujo</span>
       <h2 class="h-section">Desde la primera carga de documentos hasta la acreditación completa, en minutos.</h2>
     </div>
     <div class="stepper">
-      <div class="step reveal">
+      <div class="step">
         <div class="step-num"><span>1</span></div>
         <h3>El contratista incorpora a su trabajador</h3>
         <p>Sube los documentos requeridos por la faena. Krew los procesa automáticamente: extrae datos, verifica vigencia, detecta si falta algo y notifica.</p>
       </div>
-      <div class="step reveal">
+      <div class="step">
         <div class="step-num"><span>2</span></div>
-        <h3>AI clasifica y valida en tiempo real</h3>
-        <p>Sin revisión manual. Krew identifica el tipo de documento, extrae la fecha de vencimiento, lo vincula al perfil del trabajador y actualiza el estado de acreditación.</p>
+        <h3>AI clasifica y coordina cada paso</h3>
+        <p>Krew identifica el tipo de documento, extrae la fecha de vencimiento y coordina con la mina, los exámenes y la OTEC — por WhatsApp, con el aprobador correcto.</p>
       </div>
-      <div class="step reveal">
+      <div class="step">
         <div class="step-num"><span>3</span></div>
-        <h3>El trabajador entra con su Krew Passport — y trabaja con permiso digital</h3>
-        <p>QR de acceso válido para el día en el celular. Cuando el trabajo comienza, el PT digital registra el inicio, el supervisor firma, y Krew documenta condiciones, checklists y fotografías. Al cerrar, el registro queda inmutable.</p>
+        <h3>El trabajador recibe su Krew App</h3>
+        <p>Credencial digital en el celular con toda la documentación vigente, alertas de vencimiento y pasos para subir cualquier pendiente.</p>
       </div>
-      <div class="step reveal">
+      <div class="step">
         <div class="step-num"><span>4</span></div>
-        <h3>El administrador y la mina tienen visibilidad completa</h3>
-        <p>Dashboard en tiempo real con el estado de toda la dotación, las OTs activas y los eventos de cumplimiento del día. Ante una fiscalización o una disputa de boleta, el expediente de evidencia está disponible en minutos.</p>
+        <h3>El administrador tiene visibilidad completa</h3>
+        <p>Dashboard en tiempo real con el estado de toda su dotación: quién está listo, quién tiene algo pendiente, qué vence esta semana.</p>
       </div>
     </div>
   </div>
@@ -833,66 +587,27 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 <!-- PARA QUIÉN ES -->
 <section>
   <div class="container">
-    <div class="section-head reveal">
+    <div class="section-head">
       <span class="eyebrow">Para quién es</span>
       <h2 class="h-section">Krew fue especialmente diseñado para quienes gestionan la operación — más visibilidad, en menos tiempo.</h2>
     </div>
-    <div class="audience-cards grid-2x2">
-      <div class="acard reveal">
+    <div class="audience-cards">
+      <div class="acard">
         <div class="acard-num">01</div>
         <h3>El Administrador de Contratos</h3>
-        <p>Gestiona entre 5 y 20 contratos simultáneos con distintas minas, cada una con sus propios requisitos, plataformas y auditorías. Hoy coordina eso con llamadas, correos y carpetas compartidas. Krew le da un solo lugar donde ver todo, actuar sobre lo urgente y documentar todo — para todas las minas a la vez.</p>
+        <p>Gestiona entre 5 y 20 contratos simultáneos con distintas minas, cada una con sus propios requisitos de acreditación. Hoy coordina eso con llamadas, correos y carpetas compartidas. Krew le da un solo lugar donde ver todo, actuar sobre lo que urge y documentar lo que se hizo.</p>
       </div>
-      <div class="acard reveal">
+      <div class="acard">
         <div class="acard-num">02</div>
-        <h3>El área de RRHH o jefe de acreditación</h3>
-        <p>Lleva más de 1.200 documentos activos para 150 trabajadores en 3 minas. Cada uno con su propia fecha, formato y lógica de validación por plataforma. Con Krew, los trabajadores se autogestionan sus recordatorios y el área responde a excepciones — no a urgencias cotidianas.</p>
+        <h3>El área de RRHH del contratista</h3>
+        <p>Recibe solicitudes de ingreso, persigue documentos de trabajadores, reenvía correos a la mina y resuelve rechazos en portería. Con Krew, los trabajadores se autogestionan sus recordatorios y el área responde a excepciones — no a urgencias cotidianas.</p>
       </div>
-      <div class="acard reveal">
+      <div class="acard">
         <div class="acard-num">03</div>
-        <h3>El supervisor en terreno</h3>
-        <p>Necesita una sola confirmación antes de empezar el turno: que cada trabajador está autorizado para entrar y ejecutar la tarea. Krew se la da antes de salir al campamento — no en portería cuando ya es tarde.</p>
-      </div>
-      <div class="acard reveal">
-        <div class="acard-num">04</div>
         <h3>El área de acreditación de la mina</h3>
-        <p>Administra la documentación de 80 a 150 empresas contratistas en simultáneo. Sin visibilidad centralizada, cada validación es manual. Krew le entrega un dashboard con el estado real de cumplimiento de todos sus contratistas — más inteligencia sobre cuáles representan mayor riesgo operacional.</p>
+        <p>Administra la documentación de 80 a 150 empresas contratistas en simultáneo. Sin una capa de visibilidad centralizada, cada validación es manual. Krew le entrega un dashboard con el estado real de cumplimiento de todos sus contratistas, actualizado en tiempo real.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- UN SISTEMA, TRES MÓDULOS -->
-<section class="modules-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">Cómo se conecta</span>
-      <h2 class="h-section">Cada módulo genera los datos que hace más poderoso al siguiente.</h2>
-      <p>Krew no es tres herramientas separadas. Es un sistema donde la acreditación alimenta la ejecución, y la ejecución produce la inteligencia que ningún proceso manual puede generar.</p>
-    </div>
-    <div class="modules-flow">
-      <div class="mcard reveal">
-        <div class="mc-eyebrow">01</div>
-        <h3>ACCREDITATION</h3>
-        <p>Cada trabajador y activo acreditado en tiempo real. El estado documental determina quién puede entrar y qué trabajo puede ejecutar.</p>
-        <div class="mc-foot">los datos de acreditación habilitan la ejecución →</div>
-      </div>
-      <div class="mflow-arrow" aria-hidden="true"><i data-lucide="arrow-right" style="width:22px;height:22px;"></i></div>
-      <div class="mcard reveal">
-        <div class="mc-eyebrow">02</div>
-        <h3>EXECUTION</h3>
-        <p>Permisos de trabajo digitales, asignación de cuadrillas, registro fotográfico de terreno, firma del supervisor. Cada acción queda documentada en el momento en que ocurre.</p>
-        <div class="mc-foot">el registro de ejecución alimenta la inteligencia →</div>
-      </div>
-      <div class="mflow-arrow" aria-hidden="true"><i data-lucide="arrow-right" style="width:22px;height:22px;"></i></div>
-      <div class="mcard reveal">
-        <div class="mc-eyebrow">03</div>
-        <h3>INTELLIGENCE</h3>
-        <p>Score de riesgo por contratista, predicción de cobro, autorización de pago vinculada a compliance, benchmarks entre empresas. Respuestas que hoy no tienen sistema.</p>
-        <div class="mc-foot">&nbsp;</div>
-      </div>
-    </div>
-    <p class="modules-note">Un contratista que opera en cuatro minas distintas paga una sola suscripción y gestiona el cumplimiento de todas sus faenas desde un solo lugar. <strong>Krew traduce y sube la documentación a cada plataforma de mandante.</strong></p>
   </div>
 </section>
 
@@ -900,9 +615,9 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 <section class="cta-section" id="contacto">
   <div class="container">
     <h2 class="h-cta">¿Cuánto tiempo dedica tu equipo al seguimiento de contratos esta semana?</h2>
-    <p class="lead">Trabajamos con contratistas mineros de 50 a 500 trabajadores. El piloto dura 90 días y el ROI es medible desde el primer mes — en ciclo de cobro y en horas de gestión recuperadas.</p>
+    <p class="lead">Trabajamos con contratistas mineros de 50 a 500 trabajadores. El piloto dura 90 días y el resultado es medible desde el primer mes — en ciclo de cobro y en horas de gestión recuperadas.</p>
     <div class="cta-buttons">
-      <a class="btn btn-primary" href="#form">Contactar al equipo <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></a>
+      <a class="btn btn-primary" href="#form">Solicitar piloto <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i></a>
     </div>
 
     <form class="form" id="form" name="contact" netlify novalidate>
@@ -929,9 +644,8 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
         <button class="form-submit" type="submit">Enviar</button>
       </div>
       <div id="formSuccess" class="form-success" style="display:none;">
-        <div style="font-family:var(--font-sans);font-size:11px;color:var(--accent);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:12px;font-weight:700;">Recibido</div>
-        <div style="font-family:var(--font-sans);font-weight:700;font-size:22px;margin-bottom:8px;">Gracias. Te contactaremos en menos de 24 horas.</div>
-        <div style="color:var(--fg-2);font-size:15px;">Mientras tanto, puedes escribirnos directo a <a href="mailto:manueljoseleon@gmail.com" style="color:var(--accent);text-decoration:underline;">manueljoseleon@gmail.com</a>.</div>
+        <div style="font-family: var(--font-sans); font-size: 11px; color: var(--accent); letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; font-weight: 700;">Recibido</div>
+        <div style="font-family: var(--font-sans); font-weight: 700; font-size: 22px; margin-bottom: 8px;">Gracias. Te contactaremos en menos de 24 horas.</div>
       </div>
     </form>
   </div>
@@ -940,14 +654,14 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 <!-- FOOTER -->
 <footer>
   <div class="container footer-inner">
-    <a href="#top" class="k-lockup">
-      <span class="k-badge" style="width:28px;height:28px;">
-        <span class="k" style="font-size:18px;transform:translateY(-2px);">K</span>
+    <a href="#top" class="k-lockup" style="align-self: start;">
+      <span class="k-badge" style="width: 28px; height: 28px;">
+        <span class="k" style="font-size: 18px; transform: translateY(-2px);">K</span>
         <span class="bar"></span>
       </span>
       <span class="k-lockup-text">
-        <span class="word" style="font-size:16px;">KREW</span>
-        <span class="tag" style="font-size:7px;">Compliance Operacional</span>
+        <span class="word" style="font-size: 16px;">KREW</span>
+        <span class="tag" style="font-size: 7px;">Compliance Operacional</span>
       </span>
     </a>
     <div class="footer-center">
@@ -958,41 +672,31 @@ footer { border-top: 1px solid var(--divider); padding: 40px 0; background: var(
 </footer>
 
 <script>
-  if (window.lucide) { window.lucide.createIcons({ attrs: { 'stroke-width': 1.75 } }); }
-
-  document.querySelectorAll('.product-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      var target = tab.getAttribute('data-tab');
-      document.querySelectorAll('.product-tab').forEach(function(t) { t.classList.remove('active'); });
-      document.querySelectorAll('.product-panel').forEach(function(p) { p.classList.remove('active'); });
-      tab.classList.add('active');
-      document.getElementById(target).classList.add('active');
-      if (window.lucide) { window.lucide.createIcons({ attrs: { 'stroke-width': 1.75 } }); }
-    });
-  });
+  if (window.lucide) { window.lucide.createIcons({ attrs: { "stroke-width": 1.75 } }); }
 
   var io = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) {
       if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
     });
-  }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
-  document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('section .section-head, section .product-head, .pcard, .step, .acard, .mockup-block').forEach(function(el) {
+    el.classList.add('reveal'); io.observe(el);
+  });
 
   var form = document.getElementById('form');
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString()
-    }).then(function() {
-      document.getElementById('formInner').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    }).catch(function() {
-      document.getElementById('formInner').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    });
+    fetch('/', { method: 'POST', body: new FormData(form) })
+      .then(function() {
+        document.getElementById('formInner').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      })
+      .catch(function() {
+        document.getElementById('formInner').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      });
   });
 </script>
+
 </body>
 </html>

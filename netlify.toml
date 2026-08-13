@@ -1,5 +1,14 @@
+# Investor 01
 [[redirects]]
-  from = "/dataroom/helmet"
+  from = "/dataroom/gate"
   to = "https://drive.google.com/drive/folders/1brnHQJh4WDuKUAuZB8LTsYFhdi05kNhl?usp=drive_link"
   status = 302
   force = true
+
+# Investor 02
+[[redirects]]
+  from = "/dataroom/helmet"
+  to = "https://drive.google.com/drive/folders/1rJu7D1IMjHevtm2GLg4nFFOCPPr3B4qn?usp=sharing"
+  status = 302
+  force = true
+

@@ -12,3 +12,9 @@
   status = 302
   force = true
 
+# Investor 03
+[[redirects]]
+  from = "/dataroom/shovel"
+  to = "https://drive.google.com/drive/folders/1HL7xFl1L6fCIHqfKE6jVYxrkJacflMVY?usp=sharing"
+  status = 302
+  force = true

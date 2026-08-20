@@ -18,3 +18,10 @@
   to = "https://drive.google.com/drive/folders/1HL7xFl1L6fCIHqfKE6jVYxrkJacflMVY?usp=sharing"
   status = 302
   force = true
+
+# Investor 04
+[[redirects]]
+  from = "/dataroom/permit"
+  to = "https://drive.google.com/drive/folders/1t9561oAxuS9RFSzxJa4AoAnRrIgI0ttI?usp=drive_link"
+  status = 302
+  force = true 
